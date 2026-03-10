@@ -665,12 +665,38 @@
     }
 
     body.modal-open { overflow: hidden; }
+
+    /* Desktop photo */
+    .desktop-photo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+    .desktop-photo img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      image-rendering: pixelated;
+      border: 3px solid #fff;
+      box-shadow: 2px 2px 0 #000;
+    }
+    @media (max-width: 768px) {
+      .desktop-photo img {
+        width: 150px;
+        height: 150px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <!-- Desktop -->
 <div class="desktop" id="desktop">
+  <div class="desktop-photo">
+    <img src="yuri.jpg" alt="Yuri Rybak" style="image-rendering:pixelated;">
+  </div>
   <div class="desktop-icons">
     <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('about')}this._ct=Date.now()">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="2" width="20" height="26" fill="#fff" stroke="#000" stroke-width="1"/><rect x="4" y="2" width="20" height="4" fill="#000080"/><line x1="8" y1="12" x2="20" y2="12" stroke="#000" stroke-width="1"/><line x1="8" y1="16" x2="20" y2="16" stroke="#000" stroke-width="1"/><line x1="8" y1="20" x2="16" y2="20" stroke="#000" stroke-width="1"/><rect x="18" y="6" width="8" height="10" fill="#fff" stroke="#000" stroke-width="1"/><polyline points="18,16 22,20 26,16" fill="#c0c0c0" stroke="#000" stroke-width="1"/></svg>
@@ -731,14 +757,13 @@
     </div>
     <div class="win-body">
       <div class="win-body-inner">
+        <div class="win-media" style="margin-bottom:8px;"><img src="yuri.jpg" alt="Yuri Rybak" style="max-width:120px;image-rendering:pixelated;"></div>
         <h3>YURI RYBAK</h3>
         <p>MUSIC / MEDIA / INTERNET</p>
         <div class="spacer"></div>
         <div class="section-label">PRESENT</div>
         <ul>
-          <li><a href="https://skyhouse.cargo.site/" target="_blank" rel="noopener">SKYHOUSE</a></li>
           <li><a href="https://inpublic.fun/" target="_blank" rel="noopener">INPUBLIC</a></li>
-          <li><a href="https://machopod.substack.com/" target="_blank" rel="noopener">MACHOPOD</a></li>
           <li><a href="https://museum.ink" target="_blank" rel="noopener">MUSEUM.INK</a></li>
         </ul>
       </div>
@@ -877,9 +902,6 @@
           <div class="video-thumb" data-video-src="https://ipfs.io/ipfs/QmYbzYG63Ki4S7ccutRaUYQBukytiDFkpbcafXtKDD7ZS6/nft.mp4" data-type="direct" role="button" tabindex="0">
             <img alt="Onchain video 3" loading="lazy">
           </div>
-          <div class="video-thumb" data-video-src="https://bfthzbn6vbatzjls5pgbt23kldq257i3rhprcrfay652yszyonua.arweave.net/CWZ8hb6oQTylcuvMGetqWOGu_RuJ3xFEoMe7rEs4c2g" data-type="direct" role="button" tabindex="0">
-            <img alt="Onchain video 4" loading="lazy">
-          </div>
           <div class="video-thumb" data-video-src="https://assets.foundation.app/Af/67/QmPpMCk2ievjaoBpGvxo4n3XSqE2eSUwuPUzntKXucAf67/nft.mp4" data-type="direct" role="button" tabindex="0">
             <img alt="Onchain video 5" loading="lazy">
           </div>
@@ -1017,9 +1039,9 @@
           <div class="video-thumb" data-video-id="RYObkNKwWH4" data-type="youtube" role="button" tabindex="0">
             <img alt="Rapper collaboration" loading="lazy">
           </div>
-          <a href="https://soundcloud.com/dmanahatan/sets/produced-by-yuri-beats" target="_blank" rel="noopener" class="audio-link">
+          <div class="audio-link" onclick="openGameWindow('soundcloud')">
             <span>SOUNDCLOUD PLAYLIST</span>
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1051,11 +1073,15 @@
           </div>
           <div class="game-icon-link" onclick="openGameWindow('game-carpet')">
             <div class="carpet-placeholder">FLYING MAGIC CARPET</div>
-            <span>CARPET</span>
+            <span>CARPET FIGHTER</span>
           </div>
           <div class="game-icon-link" onclick="openGameWindow('game-shapes')">
             <img src="shapestore-icon.jpg" alt="Shape Store">
             <span>SHAPE STORE</span>
+          </div>
+          <div class="game-icon-link" onclick="openGameWindow('game-ghibli')">
+            <img src="ghibli-icon.gif" alt="Ghibli Fighter">
+            <span>GHIBLI FIGHTER</span>
           </div>
         </div>
       </div>
@@ -1107,6 +1133,38 @@
     </div>
     <div class="win-body-iframe">
       <iframe data-src="https://shapestore.ink/" title="Shape Store"></iframe>
+    </div>
+  </div>
+
+  <!-- GAME: GHIBLI FIGHTER (iframe) -->
+  <div class="win95-window" id="win-game-ghibli" data-id="game-ghibli" style="width:80%;height:85%;top:35px;left:13%;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-game-ghibli')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="3" width="12" height="8" rx="1" fill="#333" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">GHIBLI FIGHTER - INTERNET EXPLORER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('game-ghibli')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('game-ghibli')"></div>
+        <div class="win-btn win-btn-close" onclick="closeGameWindow('game-ghibli')"></div>
+      </div>
+    </div>
+    <div class="win-body-iframe">
+      <iframe data-src="https://ghiblifighter.ink/" title="Ghibli Fighter"></iframe>
+    </div>
+  </div>
+
+  <!-- SOUNDCLOUD (iframe) -->
+  <div class="win95-window" id="win-soundcloud" data-id="soundcloud" style="width:60%;height:70%;top:40px;left:20%;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-soundcloud')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#ff5500" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">SOUNDCLOUD - INTERNET EXPLORER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('soundcloud')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('soundcloud')"></div>
+        <div class="win-btn win-btn-close" onclick="closeGameWindow('soundcloud')"></div>
+      </div>
+    </div>
+    <div class="win-body-iframe">
+      <iframe data-src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/dmanahatan/sets/produced-by-yuri-beats&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false" title="SoundCloud Playlist" allow="autoplay"></iframe>
     </div>
   </div>
 
@@ -1164,17 +1222,9 @@
           <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="12" height="14" fill="#fff" stroke="#000" stroke-width="0.5"/></svg>
           ABOUT.TXT
         </div>
-        <div class="submenu-item" onclick="window.open('https://skyhouse.cargo.site/','_blank');closeStartMenu()">
-          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#87CEEB" stroke="#000" stroke-width="0.5"/></svg>
-          SKYHOUSE
-        </div>
         <div class="submenu-item" onclick="window.open('https://inpublic.fun/','_blank');closeStartMenu()">
           <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#90EE90" stroke="#000" stroke-width="0.5"/></svg>
           INPUBLIC
-        </div>
-        <div class="submenu-item" onclick="window.open('https://machopod.substack.com/','_blank');closeStartMenu()">
-          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#FFD700" stroke="#000" stroke-width="0.5"/></svg>
-          MACHOPOD
         </div>
         <div class="submenu-item" onclick="window.open('https://museum.ink','_blank');closeStartMenu()">
           <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#DDA0DD" stroke="#000" stroke-width="0.5"/></svg>
@@ -1242,22 +1292,21 @@
         </div>
         <div class="submenu-item" onclick="openGameWindow('game-carpet');closeStartMenu()">
           <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#87CEEB" stroke="#000" stroke-width="0.5"/><rect x="3" y="8" width="10" height="4" fill="#8B0000" rx="1"/></svg>
-          CARPET
+          CARPET FIGHTER
         </div>
         <div class="submenu-item" onclick="openGameWindow('game-shapes');closeStartMenu()">
           <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#000" stroke="#000" stroke-width="0.5"/><circle cx="5" cy="8" r="3" fill="#ff0000"/><rect x="9" y="5" width="5" height="5" fill="#00ff00"/></svg>
           SHAPE STORE
+        </div>
+        <div class="submenu-item" onclick="openGameWindow('game-ghibli');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#4a7c4f" stroke="#000" stroke-width="0.5"/><rect x="4" y="8" width="8" height="5" fill="#f5d68a"/></svg>
+          GHIBLI FIGHTER
         </div>
       </div>
     </div>
     <div class="start-menu-item" onclick="openWindow('contact');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" fill="#fff" stroke="#000" stroke-width="0.5"/><polyline points="2,5 12,14 22,5" fill="none" stroke="#000" stroke-width="0.5"/></svg>
       CONTACT
-    </div>
-    <div class="start-menu-sep"></div>
-    <div class="start-menu-item" onclick="closeStartMenu()">
-      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/><rect x="3" y="4" width="18" height="3" fill="#000080"/><line x1="6" y1="11" x2="18" y2="11" stroke="#808080" stroke-width="0.5"/></svg>
-      SHUT DOWN
     </div>
   </div>
 </div>
