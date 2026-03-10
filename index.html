@@ -8,482 +8,717 @@
   <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
   <style>
-    :root {
-      --color-text: #222;
-      --color-text-secondary: #555;
-      --color-text-tertiary: #888;
-      --color-bg: #fff;
-      --color-media-bg: #f5f5f5;
-      
-      --space-xs: 0.375rem;
-      --space-sm: 0.75rem;
-      --space-md: 1.25rem;
-      --space-lg: 2.5rem;
-      --space-xl: 4rem;
-      --space-2xl: 6rem;
-      
-      --font-stack: Arial, Helvetica, sans-serif;
-      --font-size-sm: 0.75rem;
-      --font-size-base: 0.875rem;
-      --font-size-lg: 1rem;
-      --line-height: 1.4;
-    }
-    
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-    
-    html {
-      font-size: 16px;
-      -webkit-text-size-adjust: 100%;
-    }
-    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
     body {
-      margin: 0;
-      padding: var(--space-lg) var(--space-md);
-      font-family: var(--font-stack);
-      font-size: var(--font-size-base);
-      font-weight: 300;
-      line-height: var(--line-height);
-      color: var(--color-text);
-      background: var(--color-bg);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
-      -webkit-font-smoothing: antialiased;
+      background: #008080;
+      color: #000;
+      -webkit-font-smoothing: none;
+      user-select: none;
     }
-    
-    body.modal-open {
-      overflow: hidden;
+    a { color: inherit; text-decoration: none; }
+
+    /* Win95 Border Helpers */
+    .raised {
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
     }
-    
-    @media (min-width: 768px) {
-      body {
-        padding: var(--space-xl) var(--space-lg);
-      }
+    .sunken {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
     }
-    
-    .page {
-      max-width: 1400px;
-      margin: 0 auto;
+    .deep-sunken {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #dfdfdf;
+      border-right: 2px solid #dfdfdf;
+      box-shadow: inset 1px 1px 0 #000;
     }
-    
-    header {
-      margin-bottom: var(--space-lg);
-    }
-    
-    .header-text {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-    
-    .name {
-      margin: 0;
-      font-size: var(--font-size-lg);
-      font-weight: 300;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    
-    .tagline {
-      margin: 0;
-      font-size: var(--font-size-sm);
-      color: var(--color-text-tertiary);
-      letter-spacing: 0.05em;
-    }
-    
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-    
-    a:hover {
-      color: var(--color-text-tertiary);
-    }
-    
-    a:focus-visible {
-      outline: 1.5px solid var(--color-text);
-      outline-offset: 2px;
-    }
-    
-    .sections {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-lg);
-    }
-    
-    .entry {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    
-    .entry-year {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-tertiary);
-      margin-bottom: var(--space-xs);
-      letter-spacing: 0.05em;
-    }
-    
-    .entry-title {
-      margin: 0 0 var(--space-sm) 0;
-      font-size: var(--font-size-base);
-      font-weight: 300;
-      letter-spacing: 0.05em;
-    }
-    
-    .entry-list {
-      margin: 0 0 var(--space-sm) 0;
-      padding: 0 0 0 1em;
-      color: var(--color-text-secondary);
-      font-size: var(--font-size-sm);
-    }
-    
-    .entry-list li {
-      margin-bottom: var(--space-xs);
-    }
-    
-    .entry-list a {
-      color: var(--color-text);
-    }
-    
-    .entry-list a:hover {
-      color: var(--color-text-tertiary);
-    }
-    
-    .entry-links {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-      margin-top: auto;
-      padding-top: var(--space-sm);
-    }
-    
-    .entry-links a {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-tertiary);
-      letter-spacing: 0.05em;
-    }
-    
-    .entry-links a:hover {
-      color: var(--color-text);
-    }
-    
-    .media {
-      margin: var(--space-sm) 0;
-      width: 100%;
-      max-width: 600px;
-    }
-    
-    .media a {
-      display: block;
-    }
-    
-    .media img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: filter 0.2s ease;
-      filter: brightness(0.95);
-    }
-    
-    .media a:hover img {
-      filter: brightness(1);
-    }
-    
-    .media-video {
-      margin: var(--space-sm) 0;
-      width: 100%;
-      max-width: 600px;
-      cursor: pointer;
-    }
-    
-    .media-video img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: filter 0.2s ease;
-      filter: brightness(0.95);
-    }
-    
-    .media-video:hover img {
-      filter: brightness(1);
-    }
-    
-    .media-fixed {
-      margin: var(--space-sm) 0;
-      width: 100%;
-      max-width: 600px;
-      position: relative;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-    }
-    
-    .media-fixed a {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .media-fixed img {
+
+    /* Desktop */
+    .desktop {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: filter 0.2s ease;
-      filter: brightness(0.95);
-    }
-    
-    .media-fixed a:hover img {
-      filter: brightness(1);
-    }
-    
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 2px;
-      aspect-ratio: 1 / 1;
-      margin: var(--space-sm) 0;
-      max-width: 600px;
-    }
-    
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 2px;
-      aspect-ratio: 1 / 1;
-      margin: var(--space-sm) 0;
-      max-width: 600px;
-    }
-    
-    .image-grid a {
-      display: block;
-      position: relative;
+      top: 0; left: 0; right: 0; bottom: 28px;
       overflow: hidden;
-      background: var(--color-media-bg);
     }
-    
-    .image-grid img {
+
+    /* Desktop Icons */
+    .desktop-icons {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: filter 0.2s ease;
-      filter: brightness(0.95);
-    }
-    
-    .image-grid a:hover img {
-      filter: brightness(1);
-    }
-    
-    .video-thumb {
-      display: block;
-      background: var(--color-media-bg);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    
-    .video-thumb:focus-visible {
-      outline: 2px solid var(--color-text);
-      outline-offset: 2px;
-    }
-    
-    .video-thumb img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: filter 0.2s ease;
-      filter: brightness(0.95);
-    }
-    
-    .video-thumb:hover img {
-      filter: brightness(1);
-    }
-    
-    .audio-link {
+      top: 10px;
+      left: 10px;
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1;
+    }
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: var(--color-media-bg);
-      position: relative;
-      transition: background 0.2s ease;
+      width: 70px;
+      padding: 4px;
+      cursor: default;
+      border: 1px solid transparent;
     }
-    
-    .audio-link:hover {
-      background: #ebebeb;
-      color: var(--color-text);
+    .desktop-icon:active, .desktop-icon.selected {
+      border: 1px dotted #fff;
     }
-    
-    .audio-link span {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-tertiary);
-      letter-spacing: 0.05em;
-      text-align: center;
-      padding: var(--space-sm);
-    }
-    
-    .audio-link:hover span {
-      color: var(--color-text);
-    }
-    
-    /* Modal styles */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .modal-content {
-      position: relative;
-      width: 90%;
-      max-width: 1100px;
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
+    .desktop-icon .icon-img {
       width: 32px;
       height: 32px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
+      margin-bottom: 2px;
+      image-rendering: pixelated;
+    }
+    .desktop-icon .icon-label {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 1px 1px 0 #000;
+      word-break: break-word;
+    }
+
+    /* Taskbar */
+    .taskbar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 28px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      z-index: 9999;
+      gap: 2px;
+    }
+
+    /* Start Button */
+    .start-btn {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      height: 22px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: default;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .start-btn:active, .start-btn.active {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      padding: 3px 5px 1px 7px;
+    }
+    .start-btn .win-flag {
+      width: 16px;
+      height: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+    .start-btn .win-flag span:nth-child(1) { background: #ff0000; }
+    .start-btn .win-flag span:nth-child(2) { background: #00ff00; }
+    .start-btn .win-flag span:nth-child(3) { background: #0000ff; }
+    .start-btn .win-flag span:nth-child(4) { background: #ffff00; }
+
+    /* Taskbar Window Buttons */
+    .taskbar-windows {
+      display: flex;
+      gap: 2px;
+      flex: 1;
+      overflow: hidden;
+      padding-left: 2px;
+    }
+    .taskbar-win-btn {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      height: 22px;
+      min-width: 80px;
+      max-width: 160px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: default;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .taskbar-win-btn.active {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      background: #f0f0f0;
+    }
+    .taskbar-win-btn .tb-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Clock */
+    .taskbar-clock {
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 2px 8px;
+      height: 22px;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: auto;
+      flex-shrink: 0;
+      letter-spacing: 0;
+      text-transform: none;
     }
-    
-    .modal-close::before,
-    .modal-close::after {
-      content: "";
+
+    /* Start Menu */
+    .start-menu {
+      display: none;
       position: absolute;
+      bottom: 28px;
+      left: 2px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      z-index: 10000;
+      min-width: 180px;
+    }
+    .start-menu.open { display: flex; }
+    .start-menu-sidebar {
       width: 24px;
-      height: 2px;
-      background: #fff;
+      background: linear-gradient(to top, #000080, #1084d0);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+      flex-shrink: 0;
     }
-    
-    .modal-close::before {
-      transform: rotate(45deg);
+    .start-menu-sidebar span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
     }
-    
-    .modal-close::after {
-      transform: rotate(-45deg);
+    .start-menu-items {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 2px 0;
     }
-    
-    .modal-close:hover::before,
-    .modal-close:hover::after {
-      background: #ccc;
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 20px 6px 4px;
+      cursor: default;
+      font-size: 11px;
+      font-weight: 700;
     }
-    
-    #modalVideoContainer {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      background: #000;
+    .start-menu-item:hover {
+      background: #000080;
+      color: #fff;
     }
-    
-    #modalVideoContainer video,
-    #modalVideoContainer iframe {
+    .start-menu-item .sm-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .start-menu-sep {
+      height: 1px;
+      margin: 2px 4px;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #fff;
+    }
+
+    /* Window */
+    .win95-window {
       position: absolute;
-      top: 0;
-      left: 0;
+      background: #c0c0c0;
+      border-top: 2px solid #dfdfdf;
+      border-left: 2px solid #dfdfdf;
+      border-bottom: 2px solid #000;
+      border-right: 2px solid #000;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+      display: none;
+      min-width: 200px;
+      min-height: 100px;
+      flex-direction: column;
+    }
+    .win95-window.visible { display: flex; }
+    .win95-window.maximized {
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Title Bar */
+    .win-titlebar {
+      display: flex;
+      align-items: center;
+      height: 18px;
+      padding: 1px 2px;
+      background: linear-gradient(90deg, #000080, #1084d0);
+      flex-shrink: 0;
+      cursor: default;
+    }
+    .win95-window.inactive .win-titlebar {
+      background: linear-gradient(90deg, #808080, #b0b0b0);
+    }
+    .win-titlebar-icon {
+      width: 14px;
+      height: 14px;
+      margin-right: 3px;
+      flex-shrink: 0;
+    }
+    .win-titlebar-text {
+      flex: 1;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 4px;
+    }
+    .win-titlebar-btns {
+      display: flex;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+    .win-btn {
+      width: 16px;
+      height: 14px;
+      background: #c0c0c0;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-bottom: 1px solid #000;
+      border-right: 1px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: default;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .win-btn:active {
+      border-top: 1px solid #000;
+      border-left: 1px solid #000;
+      border-bottom: 1px solid #fff;
+      border-right: 1px solid #fff;
+      padding: 1px 0 0 1px;
+    }
+    .win-btn-min::after { content: "_"; font-size: 9px; margin-top: -4px; }
+    .win-btn-max::after { content: ""; display: block; width: 9px; height: 8px; border: 1px solid #000; border-top: 2px solid #000; }
+    .win-btn-close::after { content: "X"; font-size: 9px; }
+
+    /* Menu Bar */
+    .win-menubar {
+      display: flex;
+      padding: 1px 0;
+      border-bottom: 1px solid #808080;
+      flex-shrink: 0;
+    }
+    .win-menu-item {
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: default;
+    }
+    .win-menu-item:hover { background: #000080; color: #fff; }
+
+    /* Window Body */
+    .win-body {
+      flex: 1;
+      padding: 6px;
+      overflow: auto;
+      min-height: 0;
+    }
+    .win-body-inner {
+      background: #fff;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #dfdfdf;
+      border-right: 2px solid #dfdfdf;
+      box-shadow: inset 1px 1px 0 #000;
+      padding: 8px;
+      color: #000;
+      font-weight: 700;
+      font-size: 11px;
+      line-height: 1.5;
+      overflow: auto;
+      max-height: 100%;
+    }
+
+    /* Content styles inside windows */
+    .win-body-inner h3 {
+      font-size: 12px;
+      margin: 0 0 6px 0;
+      font-weight: 700;
+    }
+    .win-body-inner ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 8px 0;
+    }
+    .win-body-inner li {
+      padding: 2px 0;
+      font-size: 11px;
+    }
+    .win-body-inner li::before {
+      content: "> ";
+    }
+    .win-body-inner a {
+      text-decoration: underline;
+      color: #000080;
+    }
+    .win-body-inner a:hover {
+      color: #ff0000;
+    }
+    .win-body-inner .section-label {
+      color: #808080;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+    .win-body-inner .spacer {
+      height: 10px;
+    }
+
+    /* Media inside windows */
+    .win-media { margin: 6px 0; }
+    .win-media img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .win-media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin: 6px 0;
+    }
+    .win-media-grid a,
+    .win-media-grid .video-thumb {
+      display: block;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+    .win-media-grid img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .win-media-grid .audio-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      font-size: 10px;
+      cursor: default;
+    }
+
+    /* Video Modal as Win95 Media Player */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-player {
+      background: #c0c0c0;
+      border-top: 2px solid #dfdfdf;
+      border-left: 2px solid #dfdfdf;
+      border-bottom: 2px solid #000;
+      border-right: 2px solid #000;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+      width: 90%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-player .win-titlebar {
+      background: linear-gradient(90deg, #000080, #1084d0);
+    }
+    .modal-video-area {
+      margin: 4px;
+      background: #000;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #dfdfdf;
+      border-right: 2px solid #dfdfdf;
+      position: relative;
+      padding-bottom: 56.25%;
+    }
+    .modal-video-area video,
+    .modal-video-area iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
       border: 0;
     }
-    
-    @media (prefers-reduced-motion: reduce) {
-      .video-thumb img,
-      .image-grid img,
-      .media img,
-      .media-video img,
-      .media-fixed img,
-      .audio-link,
-      .modal-overlay {
-        transition: none;
+    .modal-controls {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+    }
+    .modal-ctrl-btn {
+      width: 24px;
+      height: 20px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      cursor: default;
+    }
+    .modal-ctrl-btn:active {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #fff;
+      border-right: 2px solid #fff;
+    }
+
+    /* SVG Icons */
+    .ico-txt { fill: #fff; }
+    .ico-folder { fill: #FFCC00; }
+    .ico-film { fill: #FF6600; }
+    .ico-music { fill: #00AAFF; }
+    .ico-art { fill: #FF00FF; }
+    .ico-work { fill: #00CC00; }
+    .ico-fashion { fill: #CC0000; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .desktop-icons {
+        display: grid;
+        grid-template-columns: repeat(4, 70px);
+        gap: 4px;
+        top: 8px;
+        left: 8px;
       }
+      .win95-window.visible {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: calc(100% - 28px) !important;
+        z-index: 100 !important;
+      }
+      .start-menu { width: calc(100% - 4px); }
+      .taskbar-windows { display: none; }
     }
-    
-    @media print {
-      body { padding: 1cm; }
-      .media { display: none; }
-    }
+
+    body.modal-open { overflow: hidden; }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="header-text">
-        <h1 class="name">Yuri Rybak</h1>
-        <p class="tagline">Music / Media / Internet</p>
+
+<!-- Desktop -->
+<div class="desktop" id="desktop">
+  <div class="desktop-icons">
+    <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('about')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="2" width="20" height="26" fill="#fff" stroke="#000" stroke-width="1"/><rect x="4" y="2" width="20" height="4" fill="#000080"/><line x1="8" y1="12" x2="20" y2="12" stroke="#000" stroke-width="1"/><line x1="8" y1="16" x2="20" y2="16" stroke="#000" stroke-width="1"/><line x1="8" y1="20" x2="16" y2="20" stroke="#000" stroke-width="1"/><rect x="18" y="6" width="8" height="10" fill="#fff" stroke="#000" stroke-width="1"/><polyline points="18,16 22,20 26,16" fill="#c0c0c0" stroke="#000" stroke-width="1"/></svg>
+      <span class="icon-label">ABOUT.TXT</span>
+    </div>
+    <div class="desktop-icon" data-window="work" ondblclick="openWindow('work')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('work')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="8" width="28" height="20" rx="0" fill="#808000" stroke="#000" stroke-width="1"/><rect x="10" y="4" width="12" height="6" fill="none" stroke="#000" stroke-width="1"/><rect x="6" y="14" width="20" height="2" fill="#FFCC00"/></svg>
+      <span class="icon-label">WORK.EXE</span>
+    </div>
+    <div class="desktop-icon" data-window="film" ondblclick="openWindow('film')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('film')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="2" width="24" height="28" fill="#333" stroke="#000" stroke-width="1"/><rect x="6" y="6" width="20" height="14" fill="#87CEEB"/><rect x="4" y="2" width="4" height="28" fill="#222"/><rect x="24" y="2" width="4" height="28" fill="#222"/><rect x="4" y="4" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="4" y="9" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="4" y="14" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="4" y="19" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="4" y="24" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="24" y="4" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="24" y="9" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="24" y="14" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="24" y="19" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/><rect x="24" y="24" width="4" height="3" fill="none" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="icon-label">FILM.AVI</span>
+    </div>
+    <div class="desktop-icon" data-window="podcast" ondblclick="openWindow('podcast')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('podcast')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="6" width="28" height="20" fill="#c0c0c0" stroke="#000" stroke-width="1"/><circle cx="11" cy="16" r="6" fill="#000080"/><circle cx="11" cy="16" r="2" fill="#c0c0c0"/><rect x="20" y="10" width="8" height="2" fill="#00ff00"/><rect x="20" y="14" width="6" height="2" fill="#00ff00"/><rect x="20" y="18" width="7" height="2" fill="#00ff00"/></svg>
+      <span class="icon-label">PODCAST.WAV</span>
+    </div>
+    <div class="desktop-icon" data-window="videoart" ondblclick="openWindow('videoart')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('videoart')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="22" fill="#fff" stroke="#000" stroke-width="1"/><rect x="4" y="6" width="10" height="8" fill="#ff00ff"/><rect x="16" y="6" width="12" height="8" fill="#00ffff"/><rect x="4" y="16" width="12" height="8" fill="#ffff00"/><rect x="18" y="16" width="10" height="8" fill="#ff0000"/><rect x="8" y="26" width="16" height="2" fill="#808080"/></svg>
+      <span class="icon-label">VIDEO ART</span>
+    </div>
+    <div class="desktop-icon" data-window="fashion" ondblclick="openWindow('fashion')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('fashion')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><polygon points="16,2 6,10 8,10 8,28 24,28 24,10 26,10" fill="#cc0000" stroke="#000" stroke-width="1"/><rect x="13" y="18" width="6" height="10" fill="#808000" stroke="#000" stroke-width="1"/><rect x="10" y="12" width="4" height="4" fill="#87CEEB" stroke="#000" stroke-width="0.5"/><rect x="18" y="12" width="4" height="4" fill="#87CEEB" stroke="#000" stroke-width="0.5"/></svg>
+      <span class="icon-label">FASHION</span>
+    </div>
+    <div class="desktop-icon" data-window="music" ondblclick="openWindow('music')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('music')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" fill="#000080" stroke="#000" stroke-width="1"/><circle cx="12" cy="20" r="4" fill="none" stroke="#00ff00" stroke-width="1"/><circle cx="22" cy="18" r="3" fill="none" stroke="#00ff00" stroke-width="1"/><line x1="16" y1="20" x2="25" y2="18" stroke="#00ff00" stroke-width="1"/><line x1="16" y1="20" x2="16" y2="8" stroke="#00ff00" stroke-width="1.5"/><line x1="25" y1="18" x2="25" y2="8" stroke="#00ff00" stroke-width="1.5"/><line x1="16" y1="8" x2="25" y2="6" stroke="#00ff00" stroke-width="2"/></svg>
+      <span class="icon-label">MUSIC.EXE</span>
+    </div>
+  </div>
+
+  <!-- Windows -->
+
+  <!-- ABOUT -->
+  <div class="win95-window" id="win-about" data-id="about" style="width:380px;height:340px;top:40px;left:120px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-about')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="10" height="12" fill="#fff" stroke="#fff" stroke-width="0.5"/><line x1="3" y1="5" x2="9" y2="5" stroke="#fff" stroke-width="0.5"/><line x1="3" y1="7" x2="9" y2="7" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">ABOUT.TXT - NOTEPAD</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('about')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('about')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('about')"></div>
       </div>
-    </header>
-    
-    <main class="sections">
-      <article class="entry">
-        <time class="entry-year">Present</time>
-        <ul class="entry-list">
-          <li><a href="https://skyhouse.cargo.site/" target="_blank" rel="noopener">Skyhouse</a></li>
-          <li><a href="https://inpublic.fun/" target="_blank" rel="noopener">Inpublic</a></li>
-          <li><a href="https://machopod.substack.com/" target="_blank" rel="noopener">Machopod</a></li>
-          <li><a href="https://museum.ink" target="_blank" rel="noopener">Museum.ink</a></li>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">SEARCH</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <h3>YURI RYBAK</h3>
+        <p>MUSIC / MEDIA / INTERNET</p>
+        <div class="spacer"></div>
+        <div class="section-label">PRESENT</div>
+        <ul>
+          <li><a href="https://skyhouse.cargo.site/" target="_blank" rel="noopener">SKYHOUSE</a></li>
+          <li><a href="https://inpublic.fun/" target="_blank" rel="noopener">INPUBLIC</a></li>
+          <li><a href="https://machopod.substack.com/" target="_blank" rel="noopener">MACHOPOD</a></li>
+          <li><a href="https://museum.ink" target="_blank" rel="noopener">MUSEUM.INK</a></li>
         </ul>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2014-2024</time>
-        <h2 class="entry-title">Operations & Business Development</h2>
-        <ul class="entry-list">
-          <li><a href="https://www.nytimes.com/2024/02/10/style/willy-chavarria-new-york-fashion-week.html" target="_blank" rel="noopener">Willy Chavarria</a>, OPS</li>
-          <li><a href="https://en.wikipedia.org/wiki/Everlane" target="_blank" rel="noopener">Everlane</a>, OPS</li>
-          <li><a href="https://en.wikipedia.org/wiki/Universal_Music_Group" target="_blank" rel="noopener">Universal Music Group</a>, OPS</li>
-          <li><a href="https://techcrunch.com/2023/12/21/medallion-a-platform-for-artists-to-connect-directly-with-fans-raises-13-7m/" target="_blank" rel="noopener">Medallion.fm</a>, BD</li>
-          <li><a href="https://techcrunch.com/2022/05/05/haun-ventures-leads-50m-round-in-nft-startup-zora-labs/" target="_blank" rel="noopener">Zora Labs</a>, BD</li>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <div class="win95-window" id="win-work" data-id="work" style="width:420px;height:340px;top:60px;left:160px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-work')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="4" width="12" height="9" fill="#808000" stroke="#fff" stroke-width="0.5"/><rect x="4" y="2" width="6" height="3" fill="none" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">WORK.EXE</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('work')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('work')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('work')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2014-2024</div>
+        <h3>OPERATIONS & BUSINESS DEVELOPMENT</h3>
+        <ul>
+          <li><a href="https://www.nytimes.com/2024/02/10/style/willy-chavarria-new-york-fashion-week.html" target="_blank" rel="noopener">WILLY CHAVARRIA</a>, OPS</li>
+          <li><a href="https://en.wikipedia.org/wiki/Everlane" target="_blank" rel="noopener">EVERLANE</a>, OPS</li>
+          <li><a href="https://en.wikipedia.org/wiki/Universal_Music_Group" target="_blank" rel="noopener">UNIVERSAL MUSIC GROUP</a>, OPS</li>
+          <li><a href="https://techcrunch.com/2023/12/21/medallion-a-platform-for-artists-to-connect-directly-with-fans-raises-13-7m/" target="_blank" rel="noopener">MEDALLION.FM</a>, BD</li>
+          <li><a href="https://techcrunch.com/2022/05/05/haun-ventures-leads-50m-round-in-nft-startup-zora-labs/" target="_blank" rel="noopener">ZORA LABS</a>, BD</li>
         </ul>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2022</time>
-        <h2 class="entry-title">Music for Jude Dry's Monsieur Le Butch</h2>
-        <figure class="media">
+      </div>
+    </div>
+  </div>
+
+  <!-- FILM -->
+  <div class="win95-window" id="win-film" data-id="film" style="width:440px;height:420px;top:30px;left:200px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-film')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#333" stroke="#fff" stroke-width="0.5"/><rect x="3" y="3" width="8" height="5" fill="#87CEEB"/></svg>
+      <span class="win-titlebar-text">FILM.AVI - MEDIA PLAYER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('film')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('film')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('film')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2022</div>
+        <h3>MUSIC FOR JUDE DRY'S MONSIEUR LE BUTCH</h3>
+        <div class="win-media">
           <a href="https://www.criterionchannel.com/monsieur-le-butch" target="_blank" rel="noopener">
             <img src="Jude.png" alt="Monsieur Le Butch" loading="lazy">
           </a>
-        </figure>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2022-2024</time>
-        <h2 class="entry-title">Pattern Recognition w/ Chuck Anderson, Producer</h2>
-        <div class="image-grid">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PODCAST -->
+  <div class="win95-window" id="win-podcast" data-id="podcast" style="width:440px;height:380px;top:50px;left:240px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-podcast')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="#000080" stroke="#fff" stroke-width="0.5"/><circle cx="7" cy="7" r="2" fill="#c0c0c0"/></svg>
+      <span class="win-titlebar-text">PODCAST.WAV - SOUND RECORDER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('podcast')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('podcast')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('podcast')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2022-2024</div>
+        <h3>PATTERN RECOGNITION W/ CHUCK ANDERSON, PRODUCER</h3>
+        <div class="win-media-grid">
           <a href="https://open.spotify.com/show/0LGX9pabrdJGEz0AkfLguD" target="_blank" rel="noopener">
             <img src="1.png" alt="Pattern Recognition 1" loading="lazy">
           </a>
@@ -497,31 +732,71 @@
             <img src="4.png" alt="Pattern Recognition 4" loading="lazy">
           </a>
         </div>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2019-2022</time>
-        <h2 class="entry-title">Experiments with Sound & Color</h2>
-        <div class="video-grid">
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO ART -->
+  <div class="win95-window" id="win-videoart" data-id="videoart" style="width:440px;height:380px;top:70px;left:180px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-videoart')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="2" width="12" height="10" fill="#ff00ff" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">VIDEO ART - MEDIA PLAYER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('videoart')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('videoart')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('videoart')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2019-2022</div>
+        <h3>EXPERIMENTS WITH SOUND & COLOR</h3>
+        <div class="win-media-grid">
           <div class="video-thumb" data-video-src="https://ipfs.io/ipfs/Qmb6PJrg55XGFc3Zm2de2bhp473BnmLUfFyu4Re85eXvZ3/nft.mp4" data-type="direct" role="button" tabindex="0">
-            <img src="https://dweb.link/ipfs/Qmb6PJrg55XGFc3Zm2de2bhp473BnmLUfFyu4Re85eXvZ3/nft.mp4#t=0.1" alt="Onchain video 1" loading="lazy">
+            <img alt="Onchain video 1" loading="lazy">
           </div>
           <div class="video-thumb" data-video-src="https://ipfs.io/ipfs/QmPJzVdg2NPvGD3pcjabgmdLBb8dsGLbqgj4gWcjuDgQzk/nft.mp4" data-type="direct" role="button" tabindex="0">
-            <img src="https://dweb.link/ipfs/QmPJzVdg2NPvGD3pcjabgmdLBb8dsGLbqgj4gWcjuDgQzk/nft.mp4#t=0.1" alt="Onchain video 2" loading="lazy">
+            <img alt="Onchain video 2" loading="lazy">
           </div>
           <div class="video-thumb" data-video-src="https://ipfs.io/ipfs/QmYbzYG63Ki4S7ccutRaUYQBukytiDFkpbcafXtKDD7ZS6/nft.mp4" data-type="direct" role="button" tabindex="0">
-            <img src="https://dweb.link/ipfs/QmYbzYG63Ki4S7ccutRaUYQBukytiDFkpbcafXtKDD7ZS6/nft.mp4#t=0.1" alt="Onchain video 3" loading="lazy">
+            <img alt="Onchain video 3" loading="lazy">
           </div>
           <div class="video-thumb" data-video-src="https://bfthzbn6vbatzjls5pgbt23kldq257i3rhprcrfay652yszyonua.arweave.net/CWZ8hb6oQTylcuvMGetqWOGu_RuJ3xFEoMe7rEs4c2g" data-type="direct" role="button" tabindex="0">
-            <img src="https://bfthzbn6vbatzjls5pgbt23kldq257i3rhprcrfay652yszyonua.arweave.net/CWZ8hb6oQTylcuvMGetqWOGu_RuJ3xFEoMe7rEs4c2g#t=0.1" alt="Onchain video 4" loading="lazy">
+            <img alt="Onchain video 4" loading="lazy">
           </div>
         </div>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2017-2019</time>
-        <h2 class="entry-title">Musical Direction for Willy Chavarria</h2>
-        <div class="video-grid">
+      </div>
+    </div>
+  </div>
+
+  <!-- FASHION -->
+  <div class="win95-window" id="win-fashion" data-id="fashion" style="width:440px;height:380px;top:90px;left:220px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-fashion')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><polygon points="7,1 3,5 4,5 4,13 10,13 10,5 11,5" fill="#cc0000" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">FASHION - MEDIA PLAYER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('fashion')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('fashion')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('fashion')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2017-2019</div>
+        <h3>MUSICAL DIRECTION FOR WILLY CHAVARRIA</h3>
+        <div class="win-media-grid">
           <div class="video-thumb" data-video-id="9acKsHlGfzs" data-type="youtube" data-start="18" role="button" tabindex="0">
             <img alt="Willy Chavarria runway" loading="lazy">
           </div>
@@ -535,12 +810,32 @@
             <img alt="Willy Chavarria runway" loading="lazy">
           </div>
         </div>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2013-2017</time>
-        <h2 class="entry-title">Music Production (Fashion)</h2>
-        <div class="video-grid">
+      </div>
+    </div>
+  </div>
+
+  <!-- MUSIC -->
+  <div class="win95-window" id="win-music" data-id="music" style="width:440px;height:480px;top:40px;left:260px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-music')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#000080" stroke="#fff" stroke-width="0.5"/><circle cx="5" cy="9" r="2" fill="none" stroke="#00ff00" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">MUSIC.EXE</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('music')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('music')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('music')"></div>
+      </div>
+    </div>
+    <div class="win-menubar">
+      <span class="win-menu-item">FILE</span>
+      <span class="win-menu-item">EDIT</span>
+      <span class="win-menu-item">VIEW</span>
+      <span class="win-menu-item">HELP</span>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <div class="section-label">2013-2017</div>
+        <h3>MUSIC PRODUCTION (FASHION)</h3>
+        <div class="win-media-grid">
           <div class="video-thumb" data-video-id="24r5i_BXRnM" data-type="youtube" data-start="5" data-thumb="timb.png" role="button" tabindex="0">
             <img alt="Fashion brand work" loading="lazy">
           </div>
@@ -554,12 +849,10 @@
             <img alt="Fashion brand work" loading="lazy">
           </div>
         </div>
-      </article>
-      
-      <article class="entry">
-        <time class="entry-year">2010-2017</time>
-        <h2 class="entry-title">Music Production</h2>
-        <div class="video-grid">
+        <div class="spacer"></div>
+        <div class="section-label">2010-2017</div>
+        <h3>MUSIC PRODUCTION</h3>
+        <div class="win-media-grid">
           <div class="video-thumb" data-video-id="8x0Qc54Z4t4" data-type="youtube" data-thumb="nitt.png" role="button" tabindex="0">
             <img alt="Rapper collaboration" loading="lazy">
           </div>
@@ -570,176 +863,428 @@
             <img alt="Rapper collaboration" loading="lazy">
           </div>
           <a href="https://soundcloud.com/dmanahatan/sets/produced-by-yuri-beats" target="_blank" rel="noopener" class="audio-link">
-            <span>SoundCloud Playlist</span>
+            <span>SOUNDCLOUD PLAYLIST</span>
           </a>
         </div>
-      </article>
-    </main>
-  </div>
-  
-  <!-- Video Modal -->
-  <div class="modal-overlay" id="videoModal">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close video"></button>
-      <div id="modalVideoContainer"></div>
+      </div>
     </div>
   </div>
-  
-  <script>
-    (function() {
-      var videoThumbs = document.querySelectorAll('.video-thumb[data-video-id]');
-      var allVideoElements = document.querySelectorAll('.video-thumb, .media-video');
-      var modal = document.getElementById('videoModal');
-      var modalContainer = document.getElementById('modalVideoContainer');
-      var closeBtn = modal.querySelector('.modal-close');
-      
-      // Load thumbnails for YouTube/Vimeo
-      var thumbObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var thumb = entry.target;
-            var videoId = thumb.dataset.videoId;
-            var videoType = thumb.dataset.type;
-            var customThumb = thumb.dataset.thumb;
-            var img = thumb.querySelector('img');
-            
-            if (!img || !videoId) return;
-            
-            if (customThumb) {
-              img.src = customThumb;
-            } else if (videoType === 'vimeo') {
-              fetch('https://vimeo.com/api/v2/video/' + videoId + '.json')
-                .then(function(response) { return response.json(); })
-                .then(function(data) {
-                  img.src = data[0].thumbnail_large;
-                })
-                .catch(function() {});
-            } else if (videoType === 'youtube') {
-              img.src = 'https://i.ytimg.com/vi/' + videoId + '/maxresdefault.jpg';
-              img.onerror = function() {
-                img.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-              };
-            }
-            
-            thumbObserver.unobserve(thumb);
-          }
-        });
-      }, {
-        rootMargin: '200px'
-      });
-      
-      videoThumbs.forEach(function(el) {
-        thumbObserver.observe(el);
-      });
-      
-      // Generate poster frames for direct videos using canvas
-      var directThumbs = document.querySelectorAll('.video-thumb[data-type="direct"]');
-      directThumbs.forEach(function(thumb) {
+</div>
+
+<!-- Taskbar -->
+<div class="taskbar">
+  <div class="start-btn" id="startBtn" onclick="toggleStartMenu()">
+    <div class="win-flag"><span></span><span></span><span></span><span></span></div>
+    START
+  </div>
+  <div class="taskbar-windows" id="taskbarWindows"></div>
+  <div class="taskbar-clock" id="clock"></div>
+</div>
+
+<!-- Start Menu -->
+<div class="start-menu" id="startMenu">
+  <div class="start-menu-sidebar"><span>YURI.BIZ</span></div>
+  <div class="start-menu-items">
+    <div class="start-menu-item" onclick="openWindow('about');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="3" y="1" width="16" height="20" fill="#fff" stroke="#000" stroke-width="0.5"/><line x1="6" y1="8" x2="16" y2="8" stroke="#000" stroke-width="0.5"/><line x1="6" y1="11" x2="16" y2="11" stroke="#000" stroke-width="0.5"/><line x1="6" y1="14" x2="12" y2="14" stroke="#000" stroke-width="0.5"/></svg>
+      ABOUT
+    </div>
+    <div class="start-menu-item" onclick="openWindow('work');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="6" width="22" height="15" fill="#808000" stroke="#000" stroke-width="0.5"/><rect x="7" y="3" width="10" height="4" fill="none" stroke="#000" stroke-width="0.5"/></svg>
+      WORK
+    </div>
+    <div class="start-menu-item" onclick="openWindow('film');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#333" stroke="#000" stroke-width="0.5"/><rect x="5" y="5" width="14" height="9" fill="#87CEEB"/></svg>
+      FILM
+    </div>
+    <div class="start-menu-item" onclick="openWindow('podcast');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#000080" stroke="#000" stroke-width="0.5"/><circle cx="12" cy="12" r="3" fill="#c0c0c0"/></svg>
+      PODCAST
+    </div>
+    <div class="start-menu-item" onclick="openWindow('videoart');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="16" fill="#fff" stroke="#000" stroke-width="0.5"/><rect x="3" y="4" width="9" height="7" fill="#ff00ff"/><rect x="13" y="4" width="8" height="7" fill="#00ffff"/><rect x="3" y="12" width="9" height="6" fill="#ffff00"/><rect x="13" y="12" width="8" height="6" fill="#ff0000"/></svg>
+      VIDEO ART
+    </div>
+    <div class="start-menu-item" onclick="openWindow('fashion');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><polygon points="12,2 5,8 7,8 7,22 17,22 17,8 19,8" fill="#cc0000" stroke="#000" stroke-width="0.5"/></svg>
+      FASHION
+    </div>
+    <div class="start-menu-item" onclick="openWindow('music');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#000080" stroke="#000" stroke-width="0.5"/><circle cx="8" cy="16" r="3" fill="none" stroke="#00ff00" stroke-width="1"/><line x1="11" y1="16" x2="11" y2="5" stroke="#00ff00" stroke-width="1.5"/></svg>
+      MUSIC
+    </div>
+    <div class="start-menu-sep"></div>
+    <div class="start-menu-item" onclick="closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" fill="#c0c0c0" stroke="#000" stroke-width="0.5"/><rect x="3" y="4" width="18" height="3" fill="#000080"/><line x1="6" y1="11" x2="18" y2="11" stroke="#808080" stroke-width="0.5"/></svg>
+      SHUT DOWN
+    </div>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div class="modal-overlay" id="videoModal">
+  <div class="modal-player">
+    <div class="win-titlebar">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#333" stroke="#fff" stroke-width="0.5"/><polygon points="5,4 5,10 10,7" fill="#fff"/></svg>
+      <span class="win-titlebar-text">MEDIA PLAYER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-close" onclick="closeModal()"></div>
+      </div>
+    </div>
+    <div class="modal-video-area" id="modalVideoContainer"></div>
+    <div class="modal-controls">
+      <div class="modal-ctrl-btn" onclick="closeModal()">&#9632;</div>
+      <div class="modal-ctrl-btn">&#9654;</div>
+      <div class="modal-ctrl-btn">&#9646;&#9646;</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // State
+  var zIndex = 10;
+  var openWindows = {};
+  var activeWindow = null;
+  var dragState = null;
+
+  // Window management
+  window.openWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    win.classList.add('visible');
+    win.classList.remove('inactive');
+    bringToFront(id);
+    openWindows[id] = true;
+    updateTaskbar();
+    closeStartMenu();
+  };
+
+  window.closeWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    win.classList.remove('visible', 'maximized');
+    delete openWindows[id];
+    if (activeWindow === id) activeWindow = null;
+    updateTaskbar();
+  };
+
+  window.minimizeWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    win.classList.remove('visible');
+    openWindows[id] = 'minimized';
+    if (activeWindow === id) activeWindow = null;
+    updateTaskbar();
+    deactivateAll();
+  };
+
+  window.maximizeWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    if (win.classList.contains('maximized')) {
+      win.classList.remove('maximized');
+    } else {
+      win.classList.add('maximized');
+    }
+  };
+
+  function bringToFront(id) {
+    zIndex++;
+    var win = document.getElementById('win-' + id);
+    if (win) {
+      win.style.zIndex = zIndex;
+      deactivateAll();
+      win.classList.remove('inactive');
+      activeWindow = id;
+      openWindows[id] = true;
+      updateTaskbar();
+    }
+  }
+
+  function deactivateAll() {
+    document.querySelectorAll('.win95-window').forEach(function(w) {
+      w.classList.add('inactive');
+    });
+  }
+
+  // Click to focus
+  document.querySelectorAll('.win95-window').forEach(function(win) {
+    win.addEventListener('mousedown', function() {
+      var id = win.dataset.id;
+      if (id) bringToFront(id);
+    });
+  });
+
+  // Taskbar
+  function updateTaskbar() {
+    var container = document.getElementById('taskbarWindows');
+    container.innerHTML = '';
+    var ids = Object.keys(openWindows);
+    ids.forEach(function(id) {
+      var win = document.getElementById('win-' + id);
+      if (!win) return;
+      var title = win.querySelector('.win-titlebar-text').textContent;
+      var btn = document.createElement('div');
+      btn.className = 'taskbar-win-btn' + (activeWindow === id && openWindows[id] !== 'minimized' ? ' active' : '');
+      btn.textContent = title;
+      btn.onclick = function() {
+        if (openWindows[id] === 'minimized') {
+          win.classList.add('visible');
+          openWindows[id] = true;
+          bringToFront(id);
+        } else if (activeWindow === id) {
+          minimizeWindow(id);
+        } else {
+          bringToFront(id);
+          win.classList.add('visible');
+        }
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  // Start Menu
+  window.toggleStartMenu = function() {
+    var menu = document.getElementById('startMenu');
+    var btn = document.getElementById('startBtn');
+    if (menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      btn.classList.remove('active');
+    } else {
+      menu.classList.add('open');
+      btn.classList.add('active');
+    }
+  };
+
+  window.closeStartMenu = function() {
+    document.getElementById('startMenu').classList.remove('open');
+    document.getElementById('startBtn').classList.remove('active');
+  };
+
+  // Close start menu on outside click
+  document.addEventListener('mousedown', function(e) {
+    var menu = document.getElementById('startMenu');
+    var btn = document.getElementById('startBtn');
+    if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+      closeStartMenu();
+    }
+  });
+
+  // Dragging
+  window.startDrag = function(e, winId) {
+    var win = document.getElementById(winId);
+    if (!win || win.classList.contains('maximized')) return;
+    e.preventDefault();
+    var rect = win.getBoundingClientRect();
+    dragState = {
+      win: win,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top
+    };
+    // Bring to front
+    var id = win.dataset.id;
+    if (id) bringToFront(id);
+  };
+
+  document.addEventListener('mousemove', function(e) {
+    if (!dragState) return;
+    var x = e.clientX - dragState.offsetX;
+    var y = e.clientY - dragState.offsetY;
+    dragState.win.style.left = x + 'px';
+    dragState.win.style.top = y + 'px';
+  });
+
+  document.addEventListener('mouseup', function() {
+    dragState = null;
+  });
+
+  // Touch drag for mobile
+  document.querySelectorAll('.win-titlebar').forEach(function(tb) {
+    tb.addEventListener('touchstart', function(e) {
+      var win = tb.parentElement;
+      if (!win || win.classList.contains('maximized')) return;
+      var touch = e.touches[0];
+      var rect = win.getBoundingClientRect();
+      dragState = {
+        win: win,
+        offsetX: touch.clientX - rect.left,
+        offsetY: touch.clientY - rect.top
+      };
+      var id = win.dataset.id;
+      if (id) bringToFront(id);
+    }, {passive: true});
+  });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!dragState) return;
+    var touch = e.touches[0];
+    var x = touch.clientX - dragState.offsetX;
+    var y = touch.clientY - dragState.offsetY;
+    dragState.win.style.left = x + 'px';
+    dragState.win.style.top = y + 'px';
+  }, {passive: true});
+
+  document.addEventListener('touchend', function() {
+    dragState = null;
+  });
+
+  // Clock
+  function updateClock() {
+    var now = new Date();
+    var h = now.getHours();
+    var m = now.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    m = m < 10 ? '0' + m : m;
+    document.getElementById('clock').textContent = h + ':' + m + ' ' + ampm;
+  }
+  updateClock();
+  setInterval(updateClock, 10000);
+
+  // Video thumbnail loading
+  var videoThumbs = document.querySelectorAll('.video-thumb[data-video-id]');
+  var thumbObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var thumb = entry.target;
+        var videoId = thumb.dataset.videoId;
+        var videoType = thumb.dataset.type;
+        var customThumb = thumb.dataset.thumb;
         var img = thumb.querySelector('img');
-        var videoSrc = thumb.dataset.videoSrc;
-        
-        if (img && videoSrc) {
-          var video = document.createElement('video');
-          video.crossOrigin = 'anonymous';
-          video.muted = true;
-          video.playsInline = true;
-          video.preload = 'metadata';
-          
-          video.addEventListener('loadeddata', function() {
-            video.currentTime = 0.1;
-          });
-          
-          video.addEventListener('seeked', function() {
-            try {
-              var canvas = document.createElement('canvas');
-              canvas.width = video.videoWidth;
-              canvas.height = video.videoHeight;
-              var ctx = canvas.getContext('2d');
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              img.src = canvas.toDataURL('image/jpeg', 0.8);
-            } catch(e) {
-              // CORS issue, use placeholder
-              img.style.background = 'linear-gradient(135deg, #667 0%, #334 100%)';
-            }
-          });
-          
-          video.src = videoSrc;
-          video.load();
-        }
-      });
-      
-      // Modal functions
-      function openModal(element) {
-        var videoType = element.dataset.type;
-        var videoId = element.dataset.videoId;
-        var videoSrc = element.dataset.videoSrc;
-        var start = element.dataset.start || 0;
-        
-        modalContainer.innerHTML = '';
-        
-        if (videoType === 'direct') {
-          var video = document.createElement('video');
-          video.src = videoSrc;
-          video.controls = true;
-          video.autoplay = true;
-          video.playsInline = true;
-          modalContainer.appendChild(video);
-        } else if (videoType === 'youtube') {
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&start=' + start;
-          iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-          iframe.setAttribute('allowfullscreen', '');
-          modalContainer.appendChild(iframe);
+        if (!img || !videoId) return;
+        if (customThumb) {
+          img.src = customThumb;
         } else if (videoType === 'vimeo') {
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://player.vimeo.com/video/' + videoId + '?autoplay=1';
-          iframe.setAttribute('allow', 'autoplay; fullscreen');
-          iframe.setAttribute('allowfullscreen', '');
-          modalContainer.appendChild(iframe);
+          fetch('https://vimeo.com/api/v2/video/' + videoId + '.json')
+            .then(function(r) { return r.json(); })
+            .then(function(d) { img.src = d[0].thumbnail_large; })
+            .catch(function() {});
+        } else if (videoType === 'youtube') {
+          img.src = 'https://i.ytimg.com/vi/' + videoId + '/maxresdefault.jpg';
+          img.onerror = function() {
+            img.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
+          };
         }
-        
-        modal.classList.add('active');
-        document.body.classList.add('modal-open');
+        thumbObserver.unobserve(thumb);
       }
-      
-      function closeModal() {
-        modal.classList.remove('active');
-        document.body.classList.remove('modal-open');
-        modalContainer.innerHTML = '';
-      }
-      
-      // Event listeners for all video elements
-      allVideoElements.forEach(function(element) {
-        if (element.dataset.type) {
-          element.addEventListener('click', function(e) {
-            e.preventDefault();
-            openModal(element);
-          });
-          
-          element.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openModal(element);
-            }
-          });
+    });
+  }, { rootMargin: '200px' });
+  videoThumbs.forEach(function(el) { thumbObserver.observe(el); });
+
+  // Direct video poster frames
+  var directThumbs = document.querySelectorAll('.video-thumb[data-type="direct"]');
+  directThumbs.forEach(function(thumb) {
+    var img = thumb.querySelector('img');
+    var videoSrc = thumb.dataset.videoSrc;
+    if (img && videoSrc) {
+      var video = document.createElement('video');
+      video.crossOrigin = 'anonymous';
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      video.addEventListener('loadeddata', function() { video.currentTime = 0.1; });
+      video.addEventListener('seeked', function() {
+        try {
+          var canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          img.src = canvas.toDataURL('image/jpeg', 0.8);
+        } catch(e) {
+          img.style.background = 'linear-gradient(135deg, #667 0%, #334 100%)';
         }
       });
-      
-      closeBtn.addEventListener('click', closeModal);
-      
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          closeModal();
+      video.src = videoSrc;
+      video.load();
+    }
+  });
+
+  // Video modal
+  var modal = document.getElementById('videoModal');
+  var modalContainer = document.getElementById('modalVideoContainer');
+
+  function openModal(element) {
+    var videoType = element.dataset.type;
+    var videoId = element.dataset.videoId;
+    var videoSrc = element.dataset.videoSrc;
+    var start = element.dataset.start || 0;
+    modalContainer.innerHTML = '';
+    if (videoType === 'direct') {
+      var v = document.createElement('video');
+      v.src = videoSrc;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      modalContainer.appendChild(v);
+    } else if (videoType === 'youtube') {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&start=' + start;
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      modalContainer.appendChild(iframe);
+    } else if (videoType === 'vimeo') {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/' + videoId + '?autoplay=1';
+      iframe.setAttribute('allow', 'autoplay; fullscreen');
+      iframe.setAttribute('allowfullscreen', '');
+      modalContainer.appendChild(iframe);
+    }
+    modal.classList.add('active');
+    document.body.classList.add('modal-open');
+  }
+
+  window.closeModal = function() {
+    modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+    modalContainer.innerHTML = '';
+  };
+
+  // Click handlers for video thumbs
+  document.querySelectorAll('.video-thumb').forEach(function(el) {
+    if (el.dataset.type) {
+      el.style.cursor = 'default';
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal(el);
+      });
+      el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(el);
         }
       });
-      
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-          closeModal();
-        }
+    }
+  });
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  // Desktop click to deselect icons
+  document.getElementById('desktop').addEventListener('click', function(e) {
+    if (e.target === this || e.target === document.querySelector('.desktop-icons')) {
+      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) {
+        i.classList.remove('selected');
       });
-    })();
-  </script>
+    }
+  });
+
+  // Icon selection
+  document.querySelectorAll('.desktop-icon').forEach(function(icon) {
+    icon.addEventListener('click', function(e) {
+      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) {
+        i.classList.remove('selected');
+      });
+      icon.classList.add('selected');
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
-
