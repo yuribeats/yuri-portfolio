@@ -7,7 +7,6 @@
   <meta name="description" content="Music / Media / Internet">
   <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { width: 100%; height: 100%; overflow: hidden; }
@@ -654,45 +653,55 @@
 
     body.modal-open { overflow: hidden; }
 
-    /* Desktop photo */
-    .desktop-photo {
+    /* Desktop badge */
+    .desktop-badge {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 0;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
+      align-items: stretch;
+      background: #c0c0c0;
+      border-top: 3px solid #fff;
+      border-left: 3px solid #fff;
+      border-bottom: 3px solid #404040;
+      border-right: 3px solid #404040;
+      box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080, 2px 2px 0 #000;
+      image-rendering: pixelated;
     }
-    .desktop-bio {
-      max-width: 700px;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 28px;
-      font-weight: 400;
-      color: #ffff00;
-      text-align: center;
-      line-height: 1.8;
-      text-shadow: 3px 3px 0 #ff00ff, -1px -1px 0 #00ffff;
-      text-transform: uppercase;
-    }
-    .desktop-photo img {
-      width: 220px;
-      height: 220px;
+    .badge-img {
+      width: 100px;
+      height: 100px;
       object-fit: cover;
       image-rendering: pixelated;
-      border: 3px solid #fff;
-      box-shadow: 2px 2px 0 #000;
+      display: block;
+      border-right: 2px solid #808080;
+    }
+    .badge-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #000080;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      line-height: 1.3;
+      background: linear-gradient(180deg, #d8d8d8 0%, #c0c0c0 40%, #a8a8a8 100%);
+      text-shadow: 1px 1px 0 #fff;
     }
     @media (max-width: 768px) {
-      .desktop-photo img {
-        width: 150px;
-        height: 150px;
+      .badge-img {
+        width: 70px;
+        height: 70px;
       }
-      .desktop-bio {
-        max-width: 90vw;
-        font-size: 16px;
+      .badge-text {
+        font-size: 14px;
+        padding: 6px 12px;
       }
     }
   </style>
@@ -701,9 +710,9 @@
 
 <!-- Desktop -->
 <div class="desktop" id="desktop">
-  <div class="desktop-photo">
-    <div class="desktop-bio">WELCOME TO YURI'S WEBPAGE</div>
-    <img src="yuri.jpg" alt="Yuri Rybak" style="image-rendering:pixelated;">
+  <div class="desktop-badge">
+    <img class="badge-img" src="yuri.jpg" alt="Yuri Rybak">
+    <div class="badge-text">WELCOME TO<br>YURI'S WEBPAGE</div>
   </div>
   <div class="desktop-icons">
     <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('about')}this._ct=Date.now()">
