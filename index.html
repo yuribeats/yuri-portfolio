@@ -1514,31 +1514,18 @@
   }, { rootMargin: '200px' });
   videoThumbs.forEach(function(el) { thumbObserver.observe(el); });
 
-  var directThumbs = document.querySelectorAll('.video-thumb[data-type="direct"]');
-  directThumbs.forEach(function(thumb) {
+  // Direct video thumbs: show colored placeholder with play icon instead of downloading videos
+  var colors = ['#2a0a3e','#0a2e3e','#3e0a1a','#1a3e0a','#3e2a0a','#0a1a3e','#2e3e0a','#3e0a2e','#0a3e2a','#1a0a3e','#3e1a0a','#0a3e1a','#2a3e0a','#3e0a0a','#0a0a3e','#3e3e0a','#0a3e3e','#3e0a3e','#2a2a0a'];
+  document.querySelectorAll('.video-thumb[data-type="direct"]').forEach(function(thumb, i) {
     var img = thumb.querySelector('img');
-    var videoSrc = thumb.dataset.videoSrc;
-    if (img && videoSrc) {
-      var video = document.createElement('video');
-      video.crossOrigin = 'anonymous';
-      video.muted = true;
-      video.playsInline = true;
-      video.preload = 'metadata';
-      video.addEventListener('loadeddata', function() { video.currentTime = 0.1; });
-      video.addEventListener('seeked', function() {
-        try {
-          var canvas = document.createElement('canvas');
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-          img.src = canvas.toDataURL('image/jpeg', 0.8);
-        } catch(e) {
-          img.style.background = 'linear-gradient(135deg, #667 0%, #334 100%)';
-        }
-      });
-      video.src = videoSrc;
-      video.load();
-    }
+    if (img) img.style.display = 'none';
+    thumb.style.background = colors[i % colors.length];
+    thumb.style.display = 'flex';
+    thumb.style.alignItems = 'center';
+    thumb.style.justifyContent = 'center';
+    var play = document.createElement('div');
+    play.style.cssText = 'width:0;height:0;border-left:16px solid rgba(255,255,255,0.7);border-top:10px solid transparent;border-bottom:10px solid transparent;';
+    thumb.appendChild(play);
   });
 
   // Video modal
