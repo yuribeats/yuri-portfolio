@@ -1457,6 +1457,7 @@
     openWindows[id] = true;
     updateTaskbar();
     closeStartMenu();
+    if (typeof wp3Pause === 'function') wp3Pause();
   };
 
   window.closeGameWindow = function(id) {
@@ -1468,6 +1469,7 @@
     delete openWindows[id];
     if (activeWindow === id) activeWindow = null;
     updateTaskbar();
+    if (typeof wp3Play === 'function') wp3Play();
   };
 
   function bringToFront(id) {
@@ -1680,12 +1682,14 @@
     }
     modal.classList.add('active');
     document.body.classList.add('modal-open');
+    if (typeof wp3Pause === 'function') wp3Pause();
   }
 
   window.closeModal = function() {
     modal.classList.remove('active');
     document.body.classList.remove('modal-open');
     modalContainer.innerHTML = '';
+    if (typeof wp3Play === 'function') wp3Play();
   };
 
   document.querySelectorAll('.video-thumb').forEach(function(el) {
