@@ -749,6 +749,22 @@
 
   <!-- Windows -->
 
+  <!-- BLOG -->
+  <div class="win95-window" id="win-blog" data-id="blog" style="width:380px;height:500px;top:60px;left:560px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-blog')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#1DA1F2" stroke="#fff" stroke-width="0.5"/><text x="4" y="11" fill="#fff" font-size="9" font-weight="bold">X</text></svg>
+      <span class="win-titlebar-text">YURIS BLOG</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('blog')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('blog')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('blog')"></div>
+      </div>
+    </div>
+    <div class="win-body" style="padding:0;overflow:hidden;font-family:'Comic Sans MS',cursive;">
+      <a class="twitter-timeline" data-theme="light" data-chrome="noheader nofooter noborders" href="https://twitter.com/bigvibessss">LOADING TWEETS...</a>
+    </div>
+  </div>
+
   <!-- WELCOME -->
   <div class="win95-window" id="win-welcome" data-id="welcome" style="width:360px;height:auto;min-height:0;top:120px;left:180px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-welcome')">
@@ -1635,6 +1651,7 @@
   // Auto-open WinPlay3 on page load and play on first user interaction
   openWindow('winplay3');
   openWindow('welcome');
+  openWindow('blog');
   var wp3Started = false;
   function wp3AutoStart() {
     if (wp3Started) return;
@@ -1649,5 +1666,6 @@
   document.addEventListener('touchstart', wp3AutoStart);
 })();
 </script>
+<script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
