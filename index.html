@@ -718,62 +718,6 @@
       padding: 1px 6px;
       font-size: 11px;
     }
-    .wp3-lcd {
-      background: #0a1a2a;
-      border-top: 2px solid #404040;
-      border-left: 2px solid #404040;
-      border-bottom: 2px solid #fff;
-      border-right: 2px solid #fff;
-      padding: 6px 8px;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #00cc44;
-      position: relative;
-      min-height: 68px;
-    }
-    .wp3-lcd-top {
-      display: flex;
-      font-size: 8px;
-      font-weight: 700;
-      color: #006622;
-      margin-bottom: 4px;
-      letter-spacing: 2px;
-      gap: 14px;
-    }
-    .wp3-lcd-main {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-    .wp3-lcd-track {
-      font-size: 28px;
-      font-weight: 700;
-      color: #00ee55;
-      text-shadow: 0 0 6px #00ff44;
-    }
-    .wp3-lcd-time {
-      font-size: 28px;
-      font-weight: 700;
-      color: #00ee55;
-      text-shadow: 0 0 6px #00ff44;
-      letter-spacing: 1px;
-    }
-    .wp3-lcd-right {
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      text-align: right;
-      font-size: 8px;
-      font-weight: 700;
-      color: #00aa44;
-      line-height: 1.8;
-      letter-spacing: 1px;
-    }
-    .wp3-lcd-status {
-      font-size: 16px;
-      color: #00ee55;
-      text-shadow: 0 0 4px #00ff44;
-      margin-right: 2px;
-    }
     .wp3-transport {
       display: flex;
       gap: 2px;
@@ -868,20 +812,6 @@
         <span>FILE</span><span>OPTIONS</span><span>HELP</span>
       </div>
       <div style="padding:2px 4px 4px;">
-        <div class="wp3-lcd">
-          <div class="wp3-lcd-top">
-            <span>TRACK</span><span>MIN</span><span>SEC</span>
-          </div>
-          <div class="wp3-lcd-main">
-            <span class="wp3-lcd-status" id="wp3-status">&#9654;</span>
-            <span class="wp3-lcd-track">1</span>
-            <span class="wp3-lcd-time" id="wp3-time">0:00</span>
-          </div>
-          <div class="wp3-lcd-right">
-            <div>44 KHZ</div>
-            <div>128 KBIT/S</div>
-          </div>
-        </div>
         <div class="wp3-transport">
           <div class="wp3-btn" onclick="wp3Prev()" title="Previous">
             <svg viewBox="0 0 12 12"><rect x="1" y="2" width="2" height="8" fill="#000"/><polygon points="10,2 10,10 4,6" fill="#000"/></svg>
@@ -1717,40 +1647,21 @@
 
   // WinPlay3
   var wp3Audio = document.getElementById('wp3-audio');
-  var wp3TimeEl = document.getElementById('wp3-time');
-  var wp3StatusEl = document.getElementById('wp3-status');
-  var wp3Timer = null;
-
-  function wp3UpdateTime() {
-    if (!wp3Audio) return;
-    var t = Math.floor(wp3Audio.currentTime);
-    var m = Math.floor(t / 60);
-    var s = t % 60;
-    wp3TimeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-  }
-
+  if (wp3Audio) wp3Audio.volume = 0.5;
   window.wp3Play = function() {
     if (!wp3Audio) return;
     wp3Audio.play().catch(function(){});
-    wp3StatusEl.innerHTML = '&#9654;';
-    clearInterval(wp3Timer);
-    wp3Timer = setInterval(wp3UpdateTime, 200);
   };
 
   window.wp3Pause = function() {
     if (!wp3Audio) return;
     wp3Audio.pause();
-    wp3StatusEl.innerHTML = '&#10074;&#10074;';
-    clearInterval(wp3Timer);
   };
 
   window.wp3Stop = function() {
     if (!wp3Audio) return;
     wp3Audio.pause();
     wp3Audio.currentTime = 0;
-    wp3StatusEl.innerHTML = '&#9632;';
-    wp3TimeEl.textContent = '0:00';
-    clearInterval(wp3Timer);
   };
 
   window.wp3Prev = function() {
