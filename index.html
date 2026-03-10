@@ -35,13 +35,6 @@
       border-bottom: 2px solid #fff;
       border-right: 2px solid #fff;
     }
-    .deep-sunken {
-      border-top: 2px solid #808080;
-      border-left: 2px solid #808080;
-      border-bottom: 2px solid #dfdfdf;
-      border-right: 2px solid #dfdfdf;
-      box-shadow: inset 1px 1px 0 #000;
-    }
 
     /* Desktop */
     .desktop {
@@ -179,11 +172,6 @@
       border-right: 2px solid #fff;
       background: #f0f0f0;
     }
-    .taskbar-win-btn .tb-icon {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
 
     /* Clock */
     .taskbar-clock {
@@ -250,6 +238,7 @@
       cursor: default;
       font-size: 11px;
       font-weight: 700;
+      position: relative;
     }
     .start-menu-item:hover {
       background: #000080;
@@ -265,6 +254,56 @@
       margin: 2px 4px;
       border-top: 1px solid #808080;
       border-bottom: 1px solid #fff;
+    }
+
+    /* Submenu arrow */
+    .has-submenu::after {
+      content: "\25B6";
+      font-size: 8px;
+      position: absolute;
+      right: 6px;
+    }
+    .has-submenu:hover::after {
+      color: #fff;
+    }
+
+    /* Submenu */
+    .submenu {
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: -2px;
+      background: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      min-width: 160px;
+      padding: 2px 0;
+      z-index: 10001;
+    }
+    .has-submenu:hover > .submenu {
+      display: flex;
+      flex-direction: column;
+    }
+    .submenu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 16px 5px 6px;
+      cursor: default;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .submenu-item:hover {
+      background: #000080;
+      color: #fff;
+    }
+    .submenu-item .sm-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
     }
 
     /* Window */
@@ -423,6 +462,53 @@
       height: 10px;
     }
 
+    /* Game icons grid */
+    .game-icons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      padding: 12px 0;
+    }
+    .game-icon-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: default;
+      padding: 6px;
+      border: 1px solid transparent;
+      text-decoration: none !important;
+    }
+    .game-icon-link:hover {
+      border: 1px dotted #000;
+    }
+    .game-icon-link img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border: 1px solid #808080;
+      image-rendering: auto;
+    }
+    .game-icon-link .carpet-placeholder {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #87CEEB 0%, #4169E1 50%, #008080 100%);
+      border: 1px solid #808080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .game-icon-link span {
+      font-size: 9px;
+      color: #000;
+      text-align: center;
+    }
+
     /* Media inside windows */
     .win-media { margin: 6px 0; }
     .win-media img {
@@ -461,6 +547,24 @@
       border-right: 2px solid #808080;
       font-size: 10px;
       cursor: default;
+    }
+
+    /* Game iframe window body */
+    .win-body-iframe {
+      flex: 1;
+      min-height: 0;
+      padding: 2px;
+    }
+    .win-body-iframe iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #000;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #dfdfdf;
+      border-right: 2px solid #dfdfdf;
     }
 
     /* Video Modal as Win95 Media Player */
@@ -532,15 +636,6 @@
       border-right: 2px solid #fff;
     }
 
-    /* SVG Icons */
-    .ico-txt { fill: #fff; }
-    .ico-folder { fill: #FFCC00; }
-    .ico-film { fill: #FF6600; }
-    .ico-music { fill: #00AAFF; }
-    .ico-art { fill: #FF00FF; }
-    .ico-work { fill: #00CC00; }
-    .ico-fashion { fill: #CC0000; }
-
     /* Mobile */
     @media (max-width: 768px) {
       .desktop-icons {
@@ -559,6 +654,13 @@
         z-index: 100 !important;
       }
       .start-menu { width: calc(100% - 4px); }
+      .submenu {
+        position: fixed;
+        left: auto;
+        right: 4px;
+        top: auto;
+        bottom: 28px;
+      }
       .taskbar-windows { display: none; }
     }
 
@@ -784,7 +886,7 @@
   </div>
 
   <!-- FASHION -->
-  <div class="win95-window" id="win-fashion" data-id="fashion" style="width:440px;height:380px;top:90px;left:220px;">
+  <div class="win95-window" id="win-fashion" data-id="fashion" style="width:440px;height:480px;top:90px;left:220px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-fashion')">
       <svg class="win-titlebar-icon" viewBox="0 0 14 14"><polygon points="7,1 3,5 4,5 4,13 10,13 10,5 11,5" fill="#cc0000" stroke="#fff" stroke-width="0.5"/></svg>
       <span class="win-titlebar-text">FASHION - MEDIA PLAYER</span>
@@ -840,7 +942,7 @@
   </div>
 
   <!-- MUSIC -->
-  <div class="win95-window" id="win-music" data-id="music" style="width:440px;height:480px;top:40px;left:260px;">
+  <div class="win95-window" id="win-music" data-id="music" style="width:440px;height:380px;top:40px;left:260px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-music')">
       <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#000080" stroke="#fff" stroke-width="0.5"/><circle cx="5" cy="9" r="2" fill="none" stroke="#00ff00" stroke-width="0.5"/></svg>
       <span class="win-titlebar-text">MUSIC.EXE</span>
@@ -878,8 +980,8 @@
     </div>
   </div>
 
-  <!-- GAMES -->
-  <div class="win95-window" id="win-games" data-id="games" style="width:340px;height:260px;top:60px;left:280px;">
+  <!-- GAMES (icon picker) -->
+  <div class="win95-window" id="win-games" data-id="games" style="width:340px;height:220px;top:60px;left:280px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-games')">
       <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="3" width="12" height="8" rx="1" fill="#333" stroke="#fff" stroke-width="0.5"/><circle cx="5" cy="7" r="2" fill="none" stroke="#ff0000" stroke-width="0.5"/></svg>
       <span class="win-titlebar-text">GAMES</span>
@@ -897,13 +999,69 @@
     </div>
     <div class="win-body">
       <div class="win-body-inner">
-        <h3>GAMES</h3>
-        <ul>
-          <li><a href="https://wholemilk.fit/" target="_blank" rel="noopener">WHOLE MILK</a></li>
-          <li><a href="https://carpet-shooter-2026-03-08.vercel.app/" target="_blank" rel="noopener">FLYING MAGIC CARPET</a></li>
-          <li><a href="https://shapestore.ink/" target="_blank" rel="noopener">SHAPE STORE</a></li>
-        </ul>
+        <div class="game-icons">
+          <div class="game-icon-link" onclick="openGameWindow('game-milkmen')">
+            <img src="milkmen-icon.png" alt="Whole Milk">
+            <span>WHOLE MILK</span>
+          </div>
+          <div class="game-icon-link" onclick="openGameWindow('game-carpet')">
+            <div class="carpet-placeholder">FLYING MAGIC CARPET</div>
+            <span>CARPET</span>
+          </div>
+          <div class="game-icon-link" onclick="openGameWindow('game-shapes')">
+            <img src="shapestore-icon.jpg" alt="Shape Store">
+            <span>SHAPE STORE</span>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- GAME: WHOLE MILK (iframe) -->
+  <div class="win95-window" id="win-game-milkmen" data-id="game-milkmen" style="width:80%;height:85%;top:20px;left:10%;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-game-milkmen')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="3" width="12" height="8" rx="1" fill="#333" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">WHOLE MILK - INTERNET EXPLORER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('game-milkmen')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('game-milkmen')"></div>
+        <div class="win-btn win-btn-close" onclick="closeGameWindow('game-milkmen')"></div>
+      </div>
+    </div>
+    <div class="win-body-iframe">
+      <iframe data-src="https://wholemilk.fit/" title="Whole Milk"></iframe>
+    </div>
+  </div>
+
+  <!-- GAME: CARPET (iframe) -->
+  <div class="win95-window" id="win-game-carpet" data-id="game-carpet" style="width:80%;height:85%;top:25px;left:11%;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-game-carpet')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="3" width="12" height="8" rx="1" fill="#333" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">FLYING MAGIC CARPET - INTERNET EXPLORER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('game-carpet')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('game-carpet')"></div>
+        <div class="win-btn win-btn-close" onclick="closeGameWindow('game-carpet')"></div>
+      </div>
+    </div>
+    <div class="win-body-iframe">
+      <iframe data-src="https://carpet-shooter-2026-03-08.vercel.app/" title="Flying Magic Carpet"></iframe>
+    </div>
+  </div>
+
+  <!-- GAME: SHAPE STORE (iframe) -->
+  <div class="win95-window" id="win-game-shapes" data-id="game-shapes" style="width:80%;height:85%;top:30px;left:12%;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-game-shapes')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="3" width="12" height="8" rx="1" fill="#333" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">SHAPE STORE - INTERNET EXPLORER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('game-shapes')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('game-shapes')"></div>
+        <div class="win-btn win-btn-close" onclick="closeGameWindow('game-shapes')"></div>
+      </div>
+    </div>
+    <div class="win-body-iframe">
+      <iframe data-src="https://shapestore.ink/" title="Shape Store"></iframe>
     </div>
   </div>
 
@@ -953,13 +1111,61 @@
 <div class="start-menu" id="startMenu">
   <div class="start-menu-sidebar"><span>YURI.BIZ</span></div>
   <div class="start-menu-items">
-    <div class="start-menu-item" onclick="openWindow('about');closeStartMenu()">
+    <div class="start-menu-item has-submenu">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="3" y="1" width="16" height="20" fill="#fff" stroke="#000" stroke-width="0.5"/><line x1="6" y1="8" x2="16" y2="8" stroke="#000" stroke-width="0.5"/><line x1="6" y1="11" x2="16" y2="11" stroke="#000" stroke-width="0.5"/><line x1="6" y1="14" x2="12" y2="14" stroke="#000" stroke-width="0.5"/></svg>
       ABOUT
+      <div class="submenu">
+        <div class="submenu-item" onclick="openWindow('about');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="12" height="14" fill="#fff" stroke="#000" stroke-width="0.5"/></svg>
+          ABOUT.TXT
+        </div>
+        <div class="submenu-item" onclick="window.open('https://skyhouse.cargo.site/','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#87CEEB" stroke="#000" stroke-width="0.5"/></svg>
+          SKYHOUSE
+        </div>
+        <div class="submenu-item" onclick="window.open('https://inpublic.fun/','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#90EE90" stroke="#000" stroke-width="0.5"/></svg>
+          INPUBLIC
+        </div>
+        <div class="submenu-item" onclick="window.open('https://machopod.substack.com/','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#FFD700" stroke="#000" stroke-width="0.5"/></svg>
+          MACHOPOD
+        </div>
+        <div class="submenu-item" onclick="window.open('https://museum.ink','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#DDA0DD" stroke="#000" stroke-width="0.5"/></svg>
+          MUSEUM.INK
+        </div>
+      </div>
     </div>
-    <div class="start-menu-item" onclick="openWindow('work');closeStartMenu()">
+    <div class="start-menu-item has-submenu">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="6" width="22" height="15" fill="#808000" stroke="#000" stroke-width="0.5"/><rect x="7" y="3" width="10" height="4" fill="none" stroke="#000" stroke-width="0.5"/></svg>
       WORK
+      <div class="submenu">
+        <div class="submenu-item" onclick="openWindow('work');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="3" width="14" height="10" fill="#808000" stroke="#000" stroke-width="0.5"/></svg>
+          WORK.EXE
+        </div>
+        <div class="submenu-item" onclick="window.open('https://www.nytimes.com/2024/02/10/style/willy-chavarria-new-york-fashion-week.html','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#cc0000" stroke="#000" stroke-width="0.5"/></svg>
+          WILLY CHAVARRIA
+        </div>
+        <div class="submenu-item" onclick="window.open('https://en.wikipedia.org/wiki/Everlane','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#4169E1" stroke="#000" stroke-width="0.5"/></svg>
+          EVERLANE
+        </div>
+        <div class="submenu-item" onclick="window.open('https://en.wikipedia.org/wiki/Universal_Music_Group','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#FF8C00" stroke="#000" stroke-width="0.5"/></svg>
+          UMG
+        </div>
+        <div class="submenu-item" onclick="window.open('https://techcrunch.com/2023/12/21/medallion-a-platform-for-artists-to-connect-directly-with-fans-raises-13-7m/','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#32CD32" stroke="#000" stroke-width="0.5"/></svg>
+          MEDALLION
+        </div>
+        <div class="submenu-item" onclick="window.open('https://techcrunch.com/2022/05/05/haun-ventures-leads-50m-round-in-nft-startup-zora-labs/','_blank');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#9370DB" stroke="#000" stroke-width="0.5"/></svg>
+          ZORA LABS
+        </div>
+      </div>
     </div>
     <div class="start-menu-item" onclick="openWindow('film');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#333" stroke="#000" stroke-width="0.5"/><rect x="5" y="5" width="14" height="9" fill="#87CEEB"/></svg>
@@ -981,9 +1187,23 @@
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" fill="#000080" stroke="#000" stroke-width="0.5"/><circle cx="8" cy="16" r="3" fill="none" stroke="#00ff00" stroke-width="1"/><line x1="11" y1="16" x2="11" y2="5" stroke="#00ff00" stroke-width="1.5"/></svg>
       MUSIC
     </div>
-    <div class="start-menu-item" onclick="openWindow('games');closeStartMenu()">
+    <div class="start-menu-item has-submenu">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2" fill="#333" stroke="#000" stroke-width="0.5"/><circle cx="8" cy="12" r="3" fill="none" stroke="#ff0000" stroke-width="1"/><circle cx="17" cy="10" r="1" fill="#00ff00"/><circle cx="19" cy="13" r="1" fill="#0000ff"/></svg>
       GAMES
+      <div class="submenu">
+        <div class="submenu-item" onclick="openGameWindow('game-milkmen');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#000" stroke-width="0.5"/><rect x="5" y="3" width="6" height="10" rx="2" fill="#E8E8E8" stroke="#000" stroke-width="0.3"/></svg>
+          WHOLE MILK
+        </div>
+        <div class="submenu-item" onclick="openGameWindow('game-carpet');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#87CEEB" stroke="#000" stroke-width="0.5"/><rect x="3" y="8" width="10" height="4" fill="#8B0000" rx="1"/></svg>
+          CARPET
+        </div>
+        <div class="submenu-item" onclick="openGameWindow('game-shapes');closeStartMenu()">
+          <svg class="sm-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" fill="#000" stroke="#000" stroke-width="0.5"/><circle cx="5" cy="8" r="3" fill="#ff0000"/><rect x="9" y="5" width="5" height="5" fill="#00ff00"/></svg>
+          SHAPE STORE
+        </div>
+      </div>
     </div>
     <div class="start-menu-item" onclick="openWindow('contact');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" fill="#fff" stroke="#000" stroke-width="0.5"/><polyline points="2,5 12,14 22,5" fill="none" stroke="#000" stroke-width="0.5"/></svg>
@@ -1018,13 +1238,11 @@
 
 <script>
 (function() {
-  // State
   var zIndex = 10;
   var openWindows = {};
   var activeWindow = null;
   var dragState = null;
 
-  // Window management
   window.openWindow = function(id) {
     var win = document.getElementById('win-' + id);
     if (!win) return;
@@ -1065,6 +1283,33 @@
     }
   };
 
+  // Game windows: load iframe on open, clear on close
+  window.openGameWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    var iframe = win.querySelector('iframe');
+    if (iframe && iframe.dataset.src && !iframe.src) {
+      iframe.src = iframe.dataset.src;
+    }
+    win.classList.add('visible');
+    win.classList.remove('inactive');
+    bringToFront(id);
+    openWindows[id] = true;
+    updateTaskbar();
+    closeStartMenu();
+  };
+
+  window.closeGameWindow = function(id) {
+    var win = document.getElementById('win-' + id);
+    if (!win) return;
+    var iframe = win.querySelector('iframe');
+    if (iframe) iframe.src = '';
+    win.classList.remove('visible', 'maximized');
+    delete openWindows[id];
+    if (activeWindow === id) activeWindow = null;
+    updateTaskbar();
+  };
+
   function bringToFront(id) {
     zIndex++;
     var win = document.getElementById('win-' + id);
@@ -1084,7 +1329,6 @@
     });
   }
 
-  // Click to focus
   document.querySelectorAll('.win95-window').forEach(function(win) {
     win.addEventListener('mousedown', function() {
       var id = win.dataset.id;
@@ -1092,7 +1336,6 @@
     });
   });
 
-  // Taskbar
   function updateTaskbar() {
     var container = document.getElementById('taskbarWindows');
     container.innerHTML = '';
@@ -1120,7 +1363,6 @@
     });
   }
 
-  // Start Menu
   window.toggleStartMenu = function() {
     var menu = document.getElementById('startMenu');
     var btn = document.getElementById('startBtn');
@@ -1138,7 +1380,6 @@
     document.getElementById('startBtn').classList.remove('active');
   };
 
-  // Close start menu on outside click
   document.addEventListener('mousedown', function(e) {
     var menu = document.getElementById('startMenu');
     var btn = document.getElementById('startBtn');
@@ -1153,40 +1394,26 @@
     if (!win || win.classList.contains('maximized')) return;
     e.preventDefault();
     var rect = win.getBoundingClientRect();
-    dragState = {
-      win: win,
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top
-    };
-    // Bring to front
+    dragState = { win: win, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
     var id = win.dataset.id;
     if (id) bringToFront(id);
   };
 
   document.addEventListener('mousemove', function(e) {
     if (!dragState) return;
-    var x = e.clientX - dragState.offsetX;
-    var y = e.clientY - dragState.offsetY;
-    dragState.win.style.left = x + 'px';
-    dragState.win.style.top = y + 'px';
+    dragState.win.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.win.style.top = (e.clientY - dragState.offsetY) + 'px';
   });
 
-  document.addEventListener('mouseup', function() {
-    dragState = null;
-  });
+  document.addEventListener('mouseup', function() { dragState = null; });
 
-  // Touch drag for mobile
   document.querySelectorAll('.win-titlebar').forEach(function(tb) {
     tb.addEventListener('touchstart', function(e) {
       var win = tb.parentElement;
       if (!win || win.classList.contains('maximized')) return;
       var touch = e.touches[0];
       var rect = win.getBoundingClientRect();
-      dragState = {
-        win: win,
-        offsetX: touch.clientX - rect.left,
-        offsetY: touch.clientY - rect.top
-      };
+      dragState = { win: win, offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top };
       var id = win.dataset.id;
       if (id) bringToFront(id);
     }, {passive: true});
@@ -1195,15 +1422,11 @@
   document.addEventListener('touchmove', function(e) {
     if (!dragState) return;
     var touch = e.touches[0];
-    var x = touch.clientX - dragState.offsetX;
-    var y = touch.clientY - dragState.offsetY;
-    dragState.win.style.left = x + 'px';
-    dragState.win.style.top = y + 'px';
+    dragState.win.style.left = (touch.clientX - dragState.offsetX) + 'px';
+    dragState.win.style.top = (touch.clientY - dragState.offsetY) + 'px';
   }, {passive: true});
 
-  document.addEventListener('touchend', function() {
-    dragState = null;
-  });
+  document.addEventListener('touchend', function() { dragState = null; });
 
   // Clock
   function updateClock() {
@@ -1218,7 +1441,7 @@
   updateClock();
   setInterval(updateClock, 10000);
 
-  // Video thumbnail loading
+  // Video thumbnails
   var videoThumbs = document.querySelectorAll('.video-thumb[data-video-id]');
   var thumbObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
@@ -1238,9 +1461,7 @@
             .catch(function() {});
         } else if (videoType === 'youtube') {
           img.src = 'https://i.ytimg.com/vi/' + videoId + '/maxresdefault.jpg';
-          img.onerror = function() {
-            img.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
-          };
+          img.onerror = function() { img.src = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg'; };
         }
         thumbObserver.unobserve(thumb);
       }
@@ -1248,7 +1469,6 @@
   }, { rootMargin: '200px' });
   videoThumbs.forEach(function(el) { thumbObserver.observe(el); });
 
-  // Direct video poster frames
   var directThumbs = document.querySelectorAll('.video-thumb[data-type="direct"]');
   directThumbs.forEach(function(thumb) {
     var img = thumb.querySelector('img');
@@ -1288,10 +1508,7 @@
     modalContainer.innerHTML = '';
     if (videoType === 'direct') {
       var v = document.createElement('video');
-      v.src = videoSrc;
-      v.controls = true;
-      v.autoplay = true;
-      v.playsInline = true;
+      v.src = videoSrc; v.controls = true; v.autoplay = true; v.playsInline = true;
       modalContainer.appendChild(v);
     } else if (videoType === 'youtube') {
       var iframe = document.createElement('iframe');
@@ -1316,50 +1533,33 @@
     modalContainer.innerHTML = '';
   };
 
-  // Click handlers for video thumbs
   document.querySelectorAll('.video-thumb').forEach(function(el) {
     if (el.dataset.type) {
       el.style.cursor = 'default';
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        openModal(el);
-      });
+      el.addEventListener('click', function(e) { e.preventDefault(); openModal(el); });
       el.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal(el);
-        }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(el); }
       });
     }
   });
 
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) closeModal();
-  });
-
+  modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
   });
 
-  // Desktop click to deselect icons
+  // Desktop icon selection
   document.getElementById('desktop').addEventListener('click', function(e) {
     if (e.target === this || e.target === document.querySelector('.desktop-icons')) {
-      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) {
-        i.classList.remove('selected');
-      });
+      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) { i.classList.remove('selected'); });
     }
   });
-
-  // Icon selection
   document.querySelectorAll('.desktop-icon').forEach(function(icon) {
-    icon.addEventListener('click', function(e) {
-      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) {
-        i.classList.remove('selected');
-      });
+    icon.addEventListener('click', function() {
+      document.querySelectorAll('.desktop-icon.selected').forEach(function(i) { i.classList.remove('selected'); });
       icon.classList.add('selected');
     });
   });
-
 })();
 </script>
 </body>
