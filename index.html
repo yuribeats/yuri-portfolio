@@ -725,32 +725,33 @@
       border-bottom: 2px solid #fff;
       border-right: 2px solid #fff;
       padding: 6px 8px;
-      font-family: 'Courier New', monospace;
+      font-family: Arial, Helvetica, sans-serif;
       color: #00cc44;
       position: relative;
       min-height: 68px;
     }
     .wp3-lcd-top {
       display: flex;
-      justify-content: space-between;
       font-size: 8px;
+      font-weight: 700;
       color: #006622;
       margin-bottom: 4px;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      gap: 14px;
     }
     .wp3-lcd-main {
       display: flex;
       align-items: baseline;
-      gap: 8px;
+      gap: 6px;
     }
     .wp3-lcd-track {
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
       color: #00ee55;
       text-shadow: 0 0 6px #00ff44;
     }
     .wp3-lcd-time {
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
       color: #00ee55;
       text-shadow: 0 0 6px #00ff44;
@@ -762,21 +763,16 @@
       right: 8px;
       text-align: right;
       font-size: 8px;
+      font-weight: 700;
       color: #00aa44;
-      line-height: 1.6;
-    }
-    .wp3-lcd-mode {
-      font-size: 7px;
-      color: #006622;
-      position: absolute;
-      top: 8px;
-      right: 80px;
+      line-height: 1.8;
+      letter-spacing: 1px;
     }
     .wp3-lcd-status {
-      font-size: 14px;
+      font-size: 16px;
       color: #00ee55;
       text-shadow: 0 0 4px #00ff44;
-      margin-right: 4px;
+      margin-right: 2px;
     }
     .wp3-transport {
       display: flex;
@@ -874,8 +870,7 @@
       <div style="padding:2px 4px 4px;">
         <div class="wp3-lcd">
           <div class="wp3-lcd-top">
-            <span>TRACK&nbsp;&nbsp;&nbsp;MIN&nbsp;&nbsp;&nbsp;SEC</span>
-            <span>MODE</span>
+            <span>TRACK</span><span>MIN</span><span>SEC</span>
           </div>
           <div class="wp3-lcd-main">
             <span class="wp3-lcd-status" id="wp3-status">&#9654;</span>
@@ -883,8 +878,8 @@
             <span class="wp3-lcd-time" id="wp3-time">0:00</span>
           </div>
           <div class="wp3-lcd-right">
-            <div>44 KHZ &nbsp;&#9737; &nbsp;I</div>
-            <div>128 KBIT/S &nbsp;III</div>
+            <div>44 KHZ</div>
+            <div>128 KBIT/S</div>
           </div>
         </div>
         <div class="wp3-transport">
