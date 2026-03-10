@@ -710,33 +710,6 @@
       height: auto !important;
     }
     .wa-player .win-body { padding: 0; background: #2a2a3a; }
-    .wa-display {
-      height: 40px;
-      background: #0a0e1a;
-      border-top: 2px solid #1a1a2a;
-      border-left: 2px solid #1a1a2a;
-      border-bottom: 2px solid #3a3a4a;
-      border-right: 2px solid #3a3a4a;
-      margin: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      color: #00ee55;
-      text-shadow: 0 0 4px #00ff4466;
-    }
-    .wa-time {
-      font-size: 22px;
-      letter-spacing: 2px;
-    }
-    .wa-info {
-      font-size: 9px;
-      text-align: right;
-      color: #00aa44;
-      line-height: 1.5;
-    }
     .wa-transport {
       display: flex;
       justify-content: center;
@@ -751,16 +724,12 @@
       image-rendering: pixelated;
       flex-shrink: 0;
     }
-    .wa-btn-prev { height: 26px; background-position: 0 -40px; }
-    .wa-btn-prev:active { background-position: 0 -80px; }
     .wa-btn-play { background-position: -30px -40px; }
     .wa-btn-play:active { background-position: -30px -80px; }
     .wa-btn-pause { background-position: -60px -40px; }
     .wa-btn-pause:active { background-position: -60px -80px; }
     .wa-btn-stop { background-position: -90px -40px; }
     .wa-btn-stop:active { background-position: -90px -80px; }
-    .wa-btn-next { height: 26px; background-position: -120px -40px; }
-    .wa-btn-next:active { background-position: -120px -80px; }
   </style>
 </head>
 <body>
@@ -824,16 +793,10 @@
       </div>
     </div>
     <div class="win-body">
-      <div class="wa-display">
-        <div class="wa-time" id="wa-time">0:00</div>
-        <div class="wa-info">44KHZ<br>128KB</div>
-      </div>
       <div class="wa-transport">
-        <div class="wa-btn wa-btn-prev" onclick="wp3Prev()"></div>
         <div class="wa-btn wa-btn-play" onclick="wp3Play()"></div>
         <div class="wa-btn wa-btn-pause" onclick="wp3Pause()"></div>
         <div class="wa-btn wa-btn-stop" onclick="wp3Stop()"></div>
-        <div class="wa-btn wa-btn-next" onclick="wp3Next()"></div>
       </div>
     </div>
   </div>
