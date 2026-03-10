@@ -709,63 +709,33 @@
       width: 275px !important;
       height: auto !important;
     }
-    .wa-player .win-body { padding: 0; background: #3a3a4a; }
+    .wa-player .win-body { padding: 0; background: #2a2a3a; }
     .wa-display {
-      height: 67px;
-      position: relative;
-      overflow: hidden;
+      height: 40px;
+      background: #0a0e1a;
+      border-top: 2px solid #1a1a2a;
+      border-left: 2px solid #1a1a2a;
+      border-bottom: 2px solid #3a3a4a;
+      border-right: 2px solid #3a3a4a;
+      margin: 4px;
       display: flex;
-    }
-    .wa-display-left {
-      width: 60px; height: 67px;
-      background: url(wa-display.png) 0 -80px no-repeat;
-      flex-shrink: 0;
-    }
-    .wa-display-center {
-      flex: 1; height: 67px;
-      background: url(wa-display.png) -60px -80px repeat-x;
-      position: relative;
-    }
-    .wa-display-right {
-      width: 60px; height: 67px;
-      background: url(wa-display.png) -247px -80px no-repeat;
-      flex-shrink: 0;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: #00ee55;
+      text-shadow: 0 0 4px #00ff4466;
     }
     .wa-time {
-      position: absolute;
-      top: 14px;
-      left: 6px;
-      display: flex;
-      gap: 1px;
-      image-rendering: pixelated;
-    }
-    .wa-digit {
-      width: 13px;
-      height: 20px;
-      background-image: url(wa-numfont.png);
-      background-repeat: no-repeat;
-      image-rendering: pixelated;
-      display: inline-block;
+      font-size: 22px;
+      letter-spacing: 2px;
     }
     .wa-info {
-      position: absolute;
-      top: 4px;
-      right: -46px;
-      image-rendering: pixelated;
-    }
-    .wa-info-line {
-      height: 8px;
-      display: flex;
-      gap: 0;
-      margin-bottom: 2px;
-    }
-    .wa-smallchar {
-      width: 6px;
-      height: 8px;
-      background-image: url(wa-smallfont.png);
-      background-repeat: no-repeat;
-      image-rendering: pixelated;
-      display: inline-block;
+      font-size: 9px;
+      text-align: right;
+      color: #00aa44;
+      line-height: 1.5;
     }
     .wa-transport {
       display: flex;
@@ -855,12 +825,8 @@
     </div>
     <div class="win-body">
       <div class="wa-display">
-        <div class="wa-display-left"></div>
-        <div class="wa-display-center">
-          <div class="wa-time" id="wa-time"></div>
-          <div class="wa-info" id="wa-info"></div>
-        </div>
-        <div class="wa-display-right"></div>
+        <div class="wa-time" id="wa-time">0:00</div>
+        <div class="wa-info">44KHZ<br>128KB</div>
       </div>
       <div class="wa-transport">
         <div class="wa-btn wa-btn-prev" onclick="wp3Prev()"></div>
@@ -1688,74 +1654,21 @@
   var wp3Audio = document.getElementById('wp3-audio');
   if (wp3Audio) wp3Audio.volume = 0.5;
   var waTimeEl = document.getElementById('wa-time');
-  var waInfoEl = document.getElementById('wa-info');
   var waTimer = null;
 
-  // numfont.png: 300x60, 13x20 chars, 3 rows. Characters start at space (ASCII 32).
-  // Row layout based on standard bitmap font: chars per row = 300/13 ≈ 23
-  // Typical order: space ! " # $ ... 0-9 at positions matching ASCII-32 offset
-  // 0=row1 col16, 1=col17, ... 9=col25(row2 col2), :=row2 col3
-  // Actually for numfont it's simpler — digits only. Let me map by visual inspection:
-  // The image shows: 0 1 2 3 4 5 6 7 8 9 (space) : (space) -
-  // That's positions 0-13 in a single row of 13px wide chars
-  var waNumMap = {'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,' ':10,':':11,'-':13};
-
-  // smallfont.png: 251x30, 6x8 chars. Standard ASCII starting at space (32).
-  // Row 0 (y=0): space ! " # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? @ A B C D E F G H I J K
-  // Row 1 (y=8): L M N O P Q R S T U V W X Y Z [ \ ] ^ _ ` a b c d e f g h i j k l m n o p q r s t u v w x y z
-  // Chars per row: 251/6 ≈ 41
-  function waSmallCharPos(ch) {
-    var code = ch.charCodeAt(0) - 32;
-    var cols = 32; // chars per row based on bitmap width 192/6
-    var row = Math.floor(code / cols);
-    var col = code % cols;
-    return { x: col * 6, y: row * 8 };
-  }
-
-  function waRenderTime() {
+  function waUpdateTime() {
     if (!wp3Audio || !waTimeEl) return;
     var t = Math.floor(wp3Audio.currentTime);
     var m = Math.floor(t / 60);
     var s = t % 60;
-    var str = m + ':' + (s < 10 ? '0' : '') + s;
-    waTimeEl.innerHTML = '';
-    for (var i = 0; i < str.length; i++) {
-      var ch = str[i];
-      var pos = waNumMap[ch];
-      if (pos === undefined) pos = 10;
-      var d = document.createElement('span');
-      d.className = 'wa-digit';
-      d.style.backgroundPosition = '-' + (pos * 13) + 'px 0';
-      waTimeEl.appendChild(d);
-    }
+    waTimeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
   }
-
-  function waRenderInfo() {
-    if (!waInfoEl) return;
-    var lines = ['44KHZ', '128KB'];
-    waInfoEl.innerHTML = '';
-    lines.forEach(function(line) {
-      var row = document.createElement('div');
-      row.className = 'wa-info-line';
-      for (var i = 0; i < line.length; i++) {
-        var sp = document.createElement('span');
-        sp.className = 'wa-smallchar';
-        var p = waSmallCharPos(line[i]);
-        sp.style.backgroundPosition = '-' + p.x + 'px -' + p.y + 'px';
-        row.appendChild(sp);
-      }
-      waInfoEl.appendChild(row);
-    });
-  }
-
-  waRenderTime();
-  waRenderInfo();
 
   window.wp3Play = function() {
     if (!wp3Audio) return;
     wp3Audio.play().catch(function(){});
     clearInterval(waTimer);
-    waTimer = setInterval(waRenderTime, 200);
+    waTimer = setInterval(waUpdateTime, 200);
   };
 
   window.wp3Pause = function() {
@@ -1769,13 +1682,13 @@
     wp3Audio.pause();
     wp3Audio.currentTime = 0;
     clearInterval(waTimer);
-    waRenderTime();
+    waUpdateTime();
   };
 
   window.wp3Prev = function() {
     if (!wp3Audio) return;
     wp3Audio.currentTime = 0;
-    waRenderTime();
+    waUpdateTime();
   };
 
   window.wp3Next = function() {
@@ -1783,7 +1696,7 @@
     wp3Audio.currentTime = 0;
     wp3Audio.pause();
     clearInterval(waTimer);
-    waRenderTime();
+    waUpdateTime();
   };
 
   window.closeWinplay3 = function() {
