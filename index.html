@@ -625,13 +625,22 @@
 
     /* Mobile */
     @media (max-width: 768px) {
-      .desktop-icons {
-        display: grid;
-        grid-template-columns: repeat(4, 70px);
-        gap: 4px;
-        top: 8px;
-        left: 8px;
+      .desktop {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
+      .desktop-icons {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        top: auto;
+        left: auto;
+        padding: 10px;
+      }
+      .desktop-icon { width: auto; }
+
+      /* Fullscreen windows on mobile */
       .win95-window.visible {
         position: fixed !important;
         top: 0 !important;
@@ -640,15 +649,63 @@
         height: calc(100% - 28px) !important;
         z-index: 100 !important;
       }
+
+      /* Winamp: compact bar above taskbar, not fullscreen */
+      .wa-player.visible {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 36px !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        z-index: 9998 !important;
+      }
+
+      /* Welcome: compact centered overlay, not fullscreen */
+      #win-welcome.visible {
+        position: fixed !important;
+        top: 50% !important;
+        left: 5% !important;
+        width: 90% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        transform: translateY(-50%);
+        z-index: 101 !important;
+      }
+
+      /* Bigger touch targets for title bar */
+      .win-titlebar { height: 34px; padding: 4px 8px; }
+      .win-btn { width: 28px; height: 26px; }
+      .win-btn-min::after { font-size: 12px; }
+      .win-btn-max::after { width: 12px; height: 10px; }
+      .win-btn-close::after { font-size: 12px; }
+      .win-titlebar-btns { gap: 4px; }
+      .win-titlebar-text { font-size: 13px; }
+      .win-titlebar-icon { width: 20px; height: 20px; }
+
+      /* Start menu full width with submenus inline */
       .start-menu { width: calc(100% - 4px); }
       .submenu {
         position: fixed;
-        left: auto;
+        left: 4px !important;
         right: 4px;
-        top: auto;
+        top: auto !important;
         bottom: 28px;
+        width: calc(100% - 8px);
       }
-      .taskbar-windows { display: none; }
+      .start-menu-item { padding: 10px 20px 10px 6px; font-size: 13px; }
+      .submenu-item { padding: 10px 16px 10px 8px; font-size: 12px; }
+
+      .taskbar-windows { display: flex; flex: 1; overflow: hidden; }
+      .taskbar-win-btn { min-width: 40px; max-width: 100px; font-size: 10px; height: 30px; padding: 2px 6px; }
+
+      /* Larger taskbar for thumb */
+      .taskbar { height: 36px; }
+      .start-btn { height: 30px; font-size: 13px; }
+      .taskbar-clock { height: 30px; font-size: 12px; }
+      .start-menu { bottom: 36px; }
+      .desktop { bottom: 36px; }
     }
 
     body.modal-open { overflow: hidden; }
@@ -681,6 +738,7 @@
     .wa-btn-pause:active { background-position: -60px -80px; }
     .wa-btn-stop { background-position: -90px -40px; }
     .wa-btn-stop:active { background-position: -90px -80px; }
+    .win95-window.dragging { will-change: left, top; }
   </style>
 </head>
 <body>
@@ -691,6 +749,10 @@
     <div class="desktop-icon" data-window="about" ondblclick="openWindow('about')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('about')}this._ct=Date.now()">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="2" width="20" height="26" fill="#fff" stroke="#000" stroke-width="1"/><rect x="4" y="2" width="20" height="4" fill="#000080"/><line x1="8" y1="12" x2="20" y2="12" stroke="#000" stroke-width="1"/><line x1="8" y1="16" x2="20" y2="16" stroke="#000" stroke-width="1"/><line x1="8" y1="20" x2="16" y2="20" stroke="#000" stroke-width="1"/><rect x="18" y="6" width="8" height="10" fill="#fff" stroke="#000" stroke-width="1"/><polyline points="18,16 22,20 26,16" fill="#c0c0c0" stroke="#000" stroke-width="1"/></svg>
       <span class="icon-label">ABOUT.TXT</span>
+    </div>
+    <div class="desktop-icon" data-window="resume" ondblclick="openWindow('resume')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('resume')}this._ct=Date.now()">
+      <svg class="icon-img" viewBox="0 0 32 32"><rect x="4" y="2" width="20" height="26" fill="#fff" stroke="#000" stroke-width="1"/><rect x="4" y="2" width="20" height="4" fill="#000080"/><rect x="8" y="9" width="12" height="2" fill="#000080"/><line x1="8" y1="14" x2="20" y2="14" stroke="#000" stroke-width="1"/><line x1="8" y1="17" x2="20" y2="17" stroke="#000" stroke-width="1"/><line x1="8" y1="20" x2="20" y2="20" stroke="#000" stroke-width="1"/><line x1="8" y1="23" x2="16" y2="23" stroke="#000" stroke-width="1"/></svg>
+      <span class="icon-label">RESUME.DOC</span>
     </div>
     <div class="desktop-icon" data-window="work" ondblclick="openWindow('work')" onclick="if(this._ct&&Date.now()-this._ct<400){openWindow('work')}this._ct=Date.now()">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="8" width="28" height="20" rx="0" fill="#808000" stroke="#000" stroke-width="1"/><rect x="10" y="4" width="12" height="6" fill="none" stroke="#000" stroke-width="1"/><rect x="6" y="14" width="20" height="2" fill="#FFCC00"/></svg>
@@ -730,7 +792,7 @@
   <div class="win95-window wa-player" id="win-winplay3" data-id="winplay3" style="top:60px;left:200px;">
     <div class="win-titlebar" onmousedown="startDrag(event,'win-winplay3')">
       <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="2" y="3" width="10" height="8" fill="#ffcc00" stroke="#fff" stroke-width="0.5"/><polygon points="5,5 5,9 9,7" fill="#000"/></svg>
-      <span class="win-titlebar-text">WINAMP</span>
+      <span class="win-titlebar-text">NICE TO SEE YOU AGAIN!</span>
       <div class="win-titlebar-btns">
         <div class="win-btn win-btn-min" onclick="minimizeWindow('winplay3')"></div>
         <div class="win-btn win-btn-max" onclick="maximizeWindow('winplay3')"></div>
@@ -745,25 +807,9 @@
       </div>
     </div>
   </div>
-  <audio id="wp3-audio" src="winplay.mp3" preload="auto" autoplay loop></audio>
+  <audio id="wp3-audio" src="winplay.mp3" preload="auto" loop></audio>
 
   <!-- Windows -->
-
-  <!-- BLOG -->
-  <div class="win95-window" id="win-blog" data-id="blog" style="width:380px;height:500px;top:60px;left:560px;">
-    <div class="win-titlebar" onmousedown="startDrag(event,'win-blog')">
-      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" fill="#1DA1F2" stroke="#fff" stroke-width="0.5"/><text x="4" y="11" fill="#fff" font-size="9" font-weight="bold">X</text></svg>
-      <span class="win-titlebar-text">YURIS BLOG</span>
-      <div class="win-titlebar-btns">
-        <div class="win-btn win-btn-min" onclick="minimizeWindow('blog')"></div>
-        <div class="win-btn win-btn-max" onclick="maximizeWindow('blog')"></div>
-        <div class="win-btn win-btn-close" onclick="closeWindow('blog')"></div>
-      </div>
-    </div>
-    <div class="win-body" style="padding:0;overflow:hidden;font-family:'Comic Sans MS',cursive;">
-      <a class="twitter-timeline" data-theme="light" data-chrome="noheader nofooter noborders" href="https://twitter.com/bigvibessss">LOADING TWEETS...</a>
-    </div>
-  </div>
 
   <!-- WELCOME -->
   <div class="win95-window" id="win-welcome" data-id="welcome" style="width:360px;height:auto;min-height:0;top:120px;left:180px;">
@@ -777,7 +823,7 @@
       </div>
     </div>
     <div class="win-body">
-      <div class="win-body-inner" style="padding:12px;font-family:'Comic Sans MS',cursive;font-size:13px;line-height:1.6;text-transform:none;">
+      <div class="win-body-inner" style="padding:12px;font-family:cursive;font-size:15px;font-weight:900;line-height:1.6;text-transform:none;-webkit-text-stroke:0.3px #000;">
         HELLO, WELCOME TO YURI'S WEBSITE (THAT'S ME)!<br><br>
         I LIVE IN MOUNT AIRY PHILADELPHIA WITH MY FAMILY.<br><br>
         I ENJOY PLAYING THE PIANO, GARDENING AND THE COMPUTER!
@@ -807,6 +853,83 @@
           <li><a href="https://museum.ink" target="_blank" rel="noopener">MUSEUM.INK</a></li>
           <li><a href="https://thegoodinternet.app" target="_blank" rel="noopener">THEGOODINTERNET.APP</a></li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME -->
+  <div class="win95-window" id="win-resume" data-id="resume" style="width:440px;height:480px;top:30px;left:140px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-resume')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="10" height="12" fill="#fff" stroke="#fff" stroke-width="0.5"/><rect x="1" y="1" width="10" height="3" fill="#000080"/></svg>
+      <span class="win-titlebar-text">RESUME.DOC - WORDPAD</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('resume')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('resume')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('resume')"></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner">
+        <h3>YURI RYBAK</h3>
+        <p>917-514-2649 | <a href="mailto:w.yuri.rybak@gmail.com">W.YURI.RYBAK@GMAIL.COM</a> | MOUNT AIRY, PHILADELPHIA, PA</p>
+        <p style="margin-top:2px;">OPERATIONS & BUSINESS DEVELOPMENT &middot; MEDIA, TECH & CREATIVE INDUSTRIES</p>
+        <div class="spacer"></div>
+        <div class="section-label">PROFILE</div>
+        <p>VERSATILE OPERATIONS AND BUSINESS DEVELOPMENT LEADER WITH 10+ YEARS OF EXPERIENCE SCALING TEAMS AND PROCESSES AT HIGH-GROWTH COMPANIES ACROSS FASHION, MUSIC, E-COMMERCE, AND TECHNOLOGY. CONSISTENT TRACK RECORD OF RAPID ADVANCEMENT — PROMOTED IN EVERY ROLE HELD. STRONG COMMUNICATOR WHO BRIDGES CREATIVE AND TECHNICAL WORLDS, WITH A BACKGROUND SPANNING ENTERPRISE OPERATIONS, DIGITAL PARTNERSHIPS, AND THE CREATOR ECONOMY.</p>
+        <div class="spacer"></div>
+        <div class="section-label">EXPERIENCE</div>
+        <h3>ZORA LABS — BUSINESS DEVELOPMENT, 2022-2024</h3>
+        <ul>
+          <li>EXECUTED HIGH-PROFILE PARTNERSHIPS WITH LEADING ARTISTS AND CULTURAL FIGURES INCLUDING GRIMES, JAMES JEAN, CHUCK ANDERSON (NO PATTERN STUDIOS), BOYS CLUB, AND RHIZOME</li>
+          <li>SUPPORTED PLATFORM EVOLUTION FROM A SINGLE-CATEGORY MARKETPLACE INTO A FULL CREATIVE SUITE</li>
+          <li>LED CROSS-FUNCTIONAL COLLABORATION WITH PRODUCT AND ENGINEERING TEAMS ON PARTNER ONBOARDING, INTEGRATION, AND GO-TO-MARKET EXECUTION</li>
+        </ul>
+        <h3>MEDALLION.FM — BUSINESS DEVELOPMENT, 2021-2022</h3>
+        <ul>
+          <li>BUILT AND MANAGED PARTNERSHIPS WITH RECORDING ARTISTS, INDEPENDENT LABELS, AND DIGITAL-NATIVE AUDIENCES</li>
+          <li>POSITIONED THE PLATFORM AT THE INTERSECTION OF MUSIC AND DIRECT CREATOR MONETIZATION</li>
+        </ul>
+        <h3>UNIVERSAL MUSIC GROUP — OPERATIONS MANAGER, EAST COAST E-COMMERCE, 2020-2021</h3>
+        <ul>
+          <li>PROMOTED TO OPERATIONS MANAGER OVERSEEING ALL EAST COAST E-COMMERCE STORES FOR THE WORLD'S LARGEST MUSIC COMPANY</li>
+          <li>MANAGED CROSS-FUNCTIONAL WORKFLOWS ACROSS MARKETING, LOGISTICS, AND FULFILLMENT TEAMS AT ENTERPRISE SCALE</li>
+          <li>LEVERAGED SHOPIFY TO STREAMLINE STORE OPERATIONS, IMPROVE FULFILLMENT ACCURACY, AND SUPPORT HIGH-VOLUME RELEASE CAMPAIGNS</li>
+        </ul>
+        <h3>EVERLANE — HEAD OF OUTBOUND LOGISTICS, 2015-2020</h3>
+        <ul>
+          <li>RAPIDLY ADVANCED FROM LOGISTICS ASSOCIATE TO HEAD OF OUTBOUND LOGISTICS DURING A PERIOD OF SIGNIFICANT COMPANY GROWTH</li>
+          <li>BUILT AND LED OUTBOUND LOGISTICS OPERATIONS, OVERSEEING FULFILLMENT STRATEGY, VENDOR RELATIONSHIPS, AND TEAM EXECUTION</li>
+          <li>DEVELOPED OPERATIONAL PROCESSES AND SYSTEMS THAT SUPPORTED THE BRAND'S COMMITMENT TO TRANSPARENCY AND ON-TIME DELIVERY AT SCALE</li>
+        </ul>
+        <h3>WILLY CHAVARRIA — OPERATIONS & MUSICAL DIRECTION, 2014-2019</h3>
+        <ul>
+          <li>DIRECTED OPERATIONS AND CREATIVE LOGISTICS FOR AN ACCLAIMED INDEPENDENT FASHION LABEL</li>
+          <li>SERVED AS MUSICAL DIRECTOR FOR NYFW RUNWAY SHOWS (2017-2019), CURATING AND PRODUCING LIVE SONIC EXPERIENCES THAT BECAME A SIGNATURE OF THE BRAND'S RUNWAY IDENTITY</li>
+        </ul>
+        <div class="spacer"></div>
+        <div class="section-label">CREATIVE WORK</div>
+        <ul>
+          <li>FILM SCORE: COMPOSED ORIGINAL SCORE FOR "MONSIEUR LE BUTCH" (CRITERION CHANNEL, 2022)</li>
+          <li>PODCAST: CO-PRODUCED AND HOSTED "PATTERN RECOGNITION" WITH CHUCK ANDERSON (2022-2024)</li>
+          <li>MUSIC PRODUCTION: 10+ YEARS PRODUCING FOR FASHION BRANDS AND RECORDING ARTISTS; CO-WROTE AND PRODUCED A PLATINUM-CERTIFIED TRACK FOR LIL DICKY</li>
+        </ul>
+        <div class="spacer"></div>
+        <div class="section-label">SKILLS & TOOLS</div>
+        <ul>
+          <li>OPERATIONS: LOGISTICS, PROCESS DESIGN, CROSS-FUNCTIONAL PROGRAM MANAGEMENT, VENDOR RELATIONS, E-COMMERCE OPERATIONS</li>
+          <li>BUSINESS DEVELOPMENT: FULL-CYCLE PARTNERSHIPS, DEAL STRUCTURING, PIPELINE MANAGEMENT, PARTNER ONBOARDING</li>
+          <li>TOOLS: SHOPIFY, EXCEL, GOOGLE WORKSPACE, AI TOOLS</li>
+          <li>COMMUNICATION: SKILLED AT TRANSLATING TECHNICAL CONCEPTS FOR BUSINESS STAKEHOLDERS AND VICE VERSA</li>
+          <li>INDUSTRIES: MUSIC, FASHION, DTC E-COMMERCE, MEDIA, CREATOR ECONOMY, DIGITAL PLATFORMS</li>
+        </ul>
+        <div class="spacer"></div>
+        <div class="section-label">EDUCATION</div>
+        <ul>
+          <li>OBERLIN COLLEGE — B.A., COMPARATIVE AMERICAN STUDIES</li>
+          <li>HUNTER COLLEGE HIGH SCHOOL</li>
+        </ul>
+        <div class="spacer"></div>
+        <p><a href="yuri-rybak-resume.docx" download>DOWNLOAD RESUME.DOCX</a></p>
       </div>
     </div>
   </div>
@@ -1185,6 +1308,10 @@
         </div>
       </div>
     </div>
+    <div class="start-menu-item" onclick="openWindow('resume');closeStartMenu()">
+      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="3" y="1" width="16" height="20" fill="#fff" stroke="#000" stroke-width="0.5"/><rect x="3" y="1" width="16" height="3" fill="#000080"/><line x1="6" y1="8" x2="16" y2="8" stroke="#000" stroke-width="0.5"/><line x1="6" y1="11" x2="16" y2="11" stroke="#000" stroke-width="0.5"/><line x1="6" y1="14" x2="12" y2="14" stroke="#000" stroke-width="0.5"/></svg>
+      RESUME
+    </div>
     <div class="start-menu-item has-submenu">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="6" width="22" height="15" fill="#808000" stroke="#000" stroke-width="0.5"/><rect x="7" y="3" width="10" height="4" fill="none" stroke="#000" stroke-width="0.5"/></svg>
       WORK
@@ -1291,6 +1418,7 @@
     openWindows[id] = true;
     updateTaskbar();
     closeStartMenu();
+    if (id === 'videoart' && typeof loadDirectThumbs === 'function') loadDirectThumbs();
   };
 
   window.closeWindow = function(id) {
@@ -1429,32 +1557,51 @@
     }
   });
 
-  // Dragging
+  // Dragging (RAF-throttled for smooth movement)
+  var dragRAF = false;
+
   window.startDrag = function(e, winId) {
     var win = document.getElementById(winId);
     if (!win || win.classList.contains('maximized')) return;
     e.preventDefault();
     var rect = win.getBoundingClientRect();
-    dragState = { win: win, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    dragState = { win: win, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, x: e.clientX, y: e.clientY };
+    win.classList.add('dragging');
     var id = win.dataset.id;
     if (id) bringToFront(id);
   };
 
+  function applyDrag() {
+    dragRAF = false;
+    if (!dragState) return;
+    dragState.win.style.left = (dragState.x - dragState.offsetX) + 'px';
+    dragState.win.style.top = (dragState.y - dragState.offsetY) + 'px';
+  }
+
   document.addEventListener('mousemove', function(e) {
     if (!dragState) return;
-    dragState.win.style.left = (e.clientX - dragState.offsetX) + 'px';
-    dragState.win.style.top = (e.clientY - dragState.offsetY) + 'px';
+    dragState.x = e.clientX;
+    dragState.y = e.clientY;
+    if (!dragRAF) { dragRAF = true; requestAnimationFrame(applyDrag); }
   });
 
-  document.addEventListener('mouseup', function() { dragState = null; });
+  function endDrag() {
+    if (dragState) dragState.win.classList.remove('dragging');
+    dragState = null;
+  }
+
+  document.addEventListener('mouseup', endDrag);
 
   document.querySelectorAll('.win-titlebar').forEach(function(tb) {
     tb.addEventListener('touchstart', function(e) {
+      var t = e.target;
+      if (t.closest && (t.closest('.win-btn') || t.closest('.win-titlebar-btns'))) return;
       var win = tb.parentElement;
       if (!win || win.classList.contains('maximized')) return;
       var touch = e.touches[0];
       var rect = win.getBoundingClientRect();
-      dragState = { win: win, offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top };
+      dragState = { win: win, offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top, x: touch.clientX, y: touch.clientY };
+      win.classList.add('dragging');
       var id = win.dataset.id;
       if (id) bringToFront(id);
     }, {passive: true});
@@ -1463,11 +1610,12 @@
   document.addEventListener('touchmove', function(e) {
     if (!dragState) return;
     var touch = e.touches[0];
-    dragState.win.style.left = (touch.clientX - dragState.offsetX) + 'px';
-    dragState.win.style.top = (touch.clientY - dragState.offsetY) + 'px';
+    dragState.x = touch.clientX;
+    dragState.y = touch.clientY;
+    if (!dragRAF) { dragRAF = true; requestAnimationFrame(applyDrag); }
   }, {passive: true});
 
-  document.addEventListener('touchend', function() { dragState = null; });
+  document.addEventListener('touchend', endDrag);
 
   // Clock
   function updateClock() {
@@ -1510,26 +1658,39 @@
   }, { rootMargin: '200px' });
   videoThumbs.forEach(function(el) { thumbObserver.observe(el); });
 
-  // Direct video thumbs: use inline <video> elements to show first frame (no CORS needed)
+  // Direct video thumbs: deferred until videoart window opens (18 IPFS videos are heavy)
   var colors = ['#2a0a3e','#0a2e3e','#3e0a1a','#1a3e0a','#3e2a0a','#0a1a3e','#2e3e0a','#3e0a2e','#0a3e2a','#1a0a3e','#3e1a0a','#0a3e1a','#2a3e0a','#3e0a0a','#0a0a3e','#3e3e0a','#0a3e3e','#3e0a3e','#2a2a0a'];
+  var directThumbsLoaded = false;
+  function loadDirectThumbs() {
+    if (directThumbsLoaded) return;
+    directThumbsLoaded = true;
+    document.querySelectorAll('.video-thumb[data-type="direct"]').forEach(function(thumb, i) {
+      var img = thumb.querySelector('img');
+      if (img) img.style.display = 'none';
+      thumb.style.position = 'relative';
+      thumb.style.background = colors[i % colors.length];
+      var play = document.createElement('div');
+      play.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:0;height:0;border-left:16px solid rgba(255,255,255,0.7);border-top:10px solid transparent;border-bottom:10px solid transparent;z-index:3;pointer-events:none;';
+      thumb.appendChild(play);
+      var vid = document.createElement('video');
+      vid.src = thumb.dataset.videoSrc + '#t=0.5';
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.preload = 'metadata';
+      vid.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;';
+      vid.addEventListener('loadeddata', function() { thumb.style.background = ''; });
+      thumb.appendChild(vid);
+    });
+  }
+  // Set colored placeholders immediately (lightweight)
   document.querySelectorAll('.video-thumb[data-type="direct"]').forEach(function(thumb, i) {
     var img = thumb.querySelector('img');
     if (img) img.style.display = 'none';
     thumb.style.position = 'relative';
     thumb.style.background = colors[i % colors.length];
-    // Play icon overlay
     var play = document.createElement('div');
     play.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:0;height:0;border-left:16px solid rgba(255,255,255,0.7);border-top:10px solid transparent;border-bottom:10px solid transparent;z-index:3;pointer-events:none;';
     thumb.appendChild(play);
-    // Inline video as poster thumbnail
-    var vid = document.createElement('video');
-    vid.src = thumb.dataset.videoSrc + '#t=0.5';
-    vid.muted = true;
-    vid.playsInline = true;
-    vid.preload = 'metadata';
-    vid.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;';
-    vid.addEventListener('loadeddata', function() { thumb.style.background = ''; });
-    thumb.appendChild(vid);
   });
 
   // Video modal
@@ -1599,53 +1760,34 @@
     });
   });
 
+  // Mobile: single tap opens desktop icons (no double-tap needed)
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.querySelectorAll('.desktop-icon[data-window]').forEach(function(icon) {
+      icon.addEventListener('touchend', function(e) {
+        var windowId = icon.dataset.window;
+        if (windowId) openWindow(windowId);
+      }, {passive: true});
+    });
+  }
+
   // Winamp Player
   var wp3Audio = document.getElementById('wp3-audio');
   if (wp3Audio) wp3Audio.volume = 0.5;
-  var waTimeEl = document.getElementById('wa-time');
-  var waTimer = null;
-
-  function waUpdateTime() {
-    if (!wp3Audio || !waTimeEl) return;
-    var t = Math.floor(wp3Audio.currentTime);
-    var m = Math.floor(t / 60);
-    var s = t % 60;
-    waTimeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-  }
 
   window.wp3Play = function() {
     if (!wp3Audio) return;
     wp3Audio.play().catch(function(){});
-    clearInterval(waTimer);
-    waTimer = setInterval(waUpdateTime, 200);
   };
 
   window.wp3Pause = function() {
     if (!wp3Audio) return;
     wp3Audio.pause();
-    clearInterval(waTimer);
   };
 
   window.wp3Stop = function() {
     if (!wp3Audio) return;
     wp3Audio.pause();
     wp3Audio.currentTime = 0;
-    clearInterval(waTimer);
-    waUpdateTime();
-  };
-
-  window.wp3Prev = function() {
-    if (!wp3Audio) return;
-    wp3Audio.currentTime = 0;
-    waUpdateTime();
-  };
-
-  window.wp3Next = function() {
-    if (!wp3Audio) return;
-    wp3Audio.currentTime = 0;
-    wp3Audio.pause();
-    clearInterval(waTimer);
-    waUpdateTime();
   };
 
   window.closeWinplay3 = function() {
@@ -1656,21 +1798,7 @@
   // Auto-open WinPlay3 on page load and play on first user interaction
   openWindow('winplay3');
   openWindow('welcome');
-  openWindow('blog');
-  var wp3Started = false;
-  function wp3AutoStart() {
-    if (wp3Started) return;
-    wp3Started = true;
-    wp3Play();
-    document.removeEventListener('click', wp3AutoStart);
-    document.removeEventListener('keydown', wp3AutoStart);
-    document.removeEventListener('touchstart', wp3AutoStart);
-  }
-  document.addEventListener('click', wp3AutoStart);
-  document.addEventListener('keydown', wp3AutoStart);
-  document.addEventListener('touchstart', wp3AutoStart);
 })();
 </script>
-<script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
