@@ -777,14 +777,6 @@
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="20" fill="#111" stroke="#000" stroke-width="1"/><rect x="4" y="6" width="24" height="16" fill="#1a1a1a"/><rect x="6" y="10" width="4" height="8" fill="#228B22" opacity="0.8"/><rect x="12" y="8" width="4" height="10" fill="#228B22" opacity="0.6"/><rect x="18" y="12" width="4" height="6" fill="#228B22" opacity="0.9"/><rect x="24" y="7" width="4" height="11" fill="#228B22" opacity="0.7"/><rect x="8" y="26" width="16" height="2" fill="#808080"/></svg>
       <span class="icon-label">STUDIO</span>
     </a>
-    <a class="desktop-icon" href="https://automash.xyz" target="_blank">
-      <img class="icon-img" src="automash-icon.png" alt="AUTO MASH" style="object-fit:cover;" />
-      <span class="icon-label">AUTO MASH</span>
-    </a>
-    <a class="desktop-icon" href="https://aliendocs.org/" target="_blank">
-      <img class="icon-img" src="aliendocs-icon.png" alt="ALIEN DOCS" style="object-fit:cover;" />
-      <span class="icon-label">ALIEN DOCS</span>
-    </a>
     <a class="desktop-icon" href="https://chainexplorer.ink" target="_blank">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" fill="#000" stroke="#000" stroke-width="1"/><rect x="6" y="6" width="8" height="8" fill="none" stroke="#228B22" stroke-width="1.5"/><rect x="18" y="6" width="8" height="8" fill="none" stroke="#228B22" stroke-width="1.5"/><rect x="6" y="18" width="8" height="8" fill="none" stroke="#228B22" stroke-width="1.5"/><rect x="18" y="18" width="8" height="8" fill="none" stroke="#228B22" stroke-width="1.5"/><line x1="14" y1="10" x2="18" y2="10" stroke="#228B22" stroke-width="1.5"/><line x1="14" y1="22" x2="18" y2="22" stroke="#228B22" stroke-width="1.5"/><line x1="10" y1="14" x2="10" y2="18" stroke="#228B22" stroke-width="1.5"/><line x1="22" y1="14" x2="22" y2="18" stroke="#228B22" stroke-width="1.5"/></svg>
       <span class="icon-label">CHAIN EXPLORER</span>
@@ -796,10 +788,6 @@
     <a class="desktop-icon" href="https://datpiff.ink" target="_blank">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" fill="#000" stroke="#000" stroke-width="1"/><circle cx="16" cy="16" r="11" fill="#1a1a1a" stroke="#228B22" stroke-width="1.5"/><circle cx="16" cy="16" r="7" fill="none" stroke="#228B22" stroke-width="0.8" opacity="0.6"/><circle cx="16" cy="16" r="3" fill="#000" stroke="#228B22" stroke-width="1"/><circle cx="16" cy="16" r="1.2" fill="#228B22"/><text x="16" y="30" text-anchor="middle" fill="#fff" font-size="5" font-weight="900" font-family="Arial">MIXTAPES</text></svg>
       <span class="icon-label">DATPIFF</span>
-    </a>
-    <a class="desktop-icon" href="https://coverart.fun" target="_blank">
-      <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" fill="#000"/><rect x="4" y="4" width="11" height="11" fill="#228B22"/><rect x="17" y="4" width="11" height="11" fill="#c0c0c0"/><rect x="4" y="17" width="11" height="11" fill="#fff"/><rect x="17" y="17" width="11" height="11" fill="#228B22"/><circle cx="9.5" cy="9.5" r="2.5" fill="#000"/><circle cx="22.5" cy="22.5" r="2.5" fill="#000"/></svg>
-      <span class="icon-label">COVER ART</span>
     </a>
   </div>
 
@@ -822,6 +810,24 @@
         HELLO, WELCOME TO YURI'S WEBSITE (THAT'S ME)!<br><br>
         I LIVE IN MOUNT AIRY PHILADELPHIA WITH MY FAMILY.<br><br>
         I ENJOY PLAYING THE PIANO, GARDENING AND THE COMPUTER!
+      </div>
+    </div>
+  </div>
+
+  <!-- RUBIN (video intro — shown in place of WELCOME at /rubin) -->
+  <div class="win95-window" id="win-rubin" data-id="rubin" style="width:480px;height:auto;min-height:0;top:90px;left:160px;">
+    <div class="win-titlebar" onmousedown="startDrag(event,'win-rubin')">
+      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="2" width="12" height="10" fill="#ff00ff" stroke="#fff" stroke-width="0.5"/></svg>
+      <span class="win-titlebar-text">RUBIN.MP4 - MEDIA PLAYER</span>
+      <div class="win-titlebar-btns">
+        <div class="win-btn win-btn-min" onclick="minimizeWindow('rubin')"></div>
+        <div class="win-btn win-btn-max" onclick="maximizeWindow('rubin')"></div>
+        <div class="win-btn win-btn-close" onclick="closeWindow('rubin')"></div>
+      </div>
+    </div>
+    <div class="win-body">
+      <div class="win-body-inner" style="padding:0;">
+        <video id="rubin-video" src="rubin.mp4" controls autoplay muted playsinline preload="metadata" style="display:block;width:100%;height:auto;background:#000;"></video>
       </div>
     </div>
   </div>
@@ -1206,14 +1212,6 @@
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="22" height="15" fill="#111" stroke="#000" stroke-width="0.5"/><rect x="4" y="7" width="3" height="7" fill="#228B22"/><rect x="9" y="5" width="3" height="9" fill="#228B22"/><rect x="14" y="9" width="3" height="5" fill="#228B22"/><rect x="18" y="6" width="3" height="8" fill="#228B22"/></svg>
       STUDIO
     </div>
-    <div class="start-menu-item" onclick="window.open('https://automash.xyz','_blank','noopener');closeStartMenu()">
-      <img class="sm-icon" src="automash-icon.png" alt="" style="width:24px;height:24px;object-fit:cover;" />
-      AUTO MASH
-    </div>
-    <div class="start-menu-item" onclick="window.open('https://aliendocs.org/','_blank','noopener');closeStartMenu()">
-      <img class="sm-icon" src="aliendocs-icon.png" alt="" style="width:24px;height:24px;object-fit:cover;" />
-      ALIEN DOCS
-    </div>
     <div class="start-menu-item" onclick="window.open('https://chainexplorer.ink','_blank','noopener');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" fill="#000" stroke="#000" stroke-width="0.5"/><rect x="4" y="4" width="6" height="6" fill="none" stroke="#228B22" stroke-width="1"/><rect x="14" y="4" width="6" height="6" fill="none" stroke="#228B22" stroke-width="1"/><rect x="4" y="14" width="6" height="6" fill="none" stroke="#228B22" stroke-width="1"/><rect x="14" y="14" width="6" height="6" fill="none" stroke="#228B22" stroke-width="1"/><line x1="10" y1="7" x2="14" y2="7" stroke="#228B22" stroke-width="1"/><line x1="10" y1="17" x2="14" y2="17" stroke="#228B22" stroke-width="1"/><line x1="7" y1="10" x2="7" y2="14" stroke="#228B22" stroke-width="1"/><line x1="17" y1="10" x2="17" y2="14" stroke="#228B22" stroke-width="1"/></svg>
       CHAIN EXPLORER
@@ -1225,10 +1223,6 @@
     <div class="start-menu-item" onclick="window.open('https://datpiff.ink','_blank','noopener');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" fill="#000" stroke="#000" stroke-width="0.5"/><circle cx="12" cy="12" r="9" fill="#1a1a1a" stroke="#228B22" stroke-width="1.2"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#228B22" stroke-width="0.7" opacity="0.6"/><circle cx="12" cy="12" r="2.5" fill="#000" stroke="#228B22" stroke-width="0.8"/><circle cx="12" cy="12" r="1" fill="#228B22"/></svg>
       DATPIFF
-    </div>
-    <div class="start-menu-item" onclick="window.open('https://coverart.fun','_blank','noopener');closeStartMenu()">
-      <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" fill="#000"/><rect x="3" y="3" width="8" height="8" fill="#228B22"/><rect x="13" y="3" width="8" height="8" fill="#c0c0c0"/><rect x="3" y="13" width="8" height="8" fill="#fff"/><rect x="13" y="13" width="8" height="8" fill="#228B22"/></svg>
-      COVER ART
     </div>
   </div>
 </div>
@@ -1647,7 +1641,9 @@
 
   // Auto-open WinPlay3 on page load and play on first user interaction
   openWindow('winplay3');
-  openWindow('welcome');
+  // /rubin is the same site with the video window standing in for the WELCOME intro
+  if (location.pathname.replace(/\/+$/, '').toLowerCase() === '/rubin') openWindow('rubin');
+  else openWindow('welcome');
 })();
 </script>
 </body>
