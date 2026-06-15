@@ -784,7 +784,7 @@
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="3" y="7" width="26" height="18" fill="#fff" stroke="#000" stroke-width="1"/><polyline points="3,7 16,18 29,7" fill="none" stroke="#000" stroke-width="1"/><line x1="3" y1="25" x2="12" y2="16" stroke="#000" stroke-width="0.5"/><line x1="29" y1="25" x2="20" y2="16" stroke="#000" stroke-width="0.5"/></svg>
       <span class="icon-label">CONTACT</span>
     </div>
-    <a class="desktop-icon" href="https://everysong.site/developers.html" target="_blank">
+    <a class="desktop-icon" href="https://everysong.site/developers.html" data-rubin-href="https://everysong.site" target="_blank">
       <svg class="icon-img" viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" fill="#000" stroke="#000" stroke-width="1"/><text x="16" y="12" text-anchor="middle" fill="#228B22" font-size="6" font-weight="900" font-family="Arial">EVERY</text><text x="16" y="20" text-anchor="middle" fill="#fff" font-size="6" font-weight="900" font-family="Arial">SONG</text><polyline points="6,26 10,26 12,22 14,28 16,20 18,26 22,26" fill="none" stroke="#228B22" stroke-width="1.5"/></svg>
       <span class="icon-label">EVERY SONG</span>
     </a>
@@ -1220,7 +1220,7 @@
       CONTACT
     </div>
     <div class="start-menu-sep"></div>
-    <div class="start-menu-item" onclick="window.open('https://everysong.site/developers.html','_blank','noopener');closeStartMenu()">
+    <div class="start-menu-item" data-rubin-href="https://everysong.site" onclick="window.open('https://everysong.site/developers.html','_blank','noopener');closeStartMenu()">
       <svg class="sm-icon" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" fill="#000"/><text x="12" y="10" text-anchor="middle" fill="#228B22" font-size="5" font-weight="900" font-family="Arial">EVERY</text><text x="12" y="16" text-anchor="middle" fill="#fff" font-size="5" font-weight="900" font-family="Arial">SONG</text></svg>
       EVERY SONG
     </div>
@@ -1693,6 +1693,22 @@
   // /rubin is the same site with the video window standing in for the WELCOME intro
   if (location.pathname.replace(/\/+$/, '').toLowerCase() === '/rubin') {
     document.body.classList.add('rubin'); // hides .rubin-hide items (e.g. Chain Explorer) on this version
+    // on /rubin, links tagged data-rubin-href repoint (EVERY SONG -> everysong.site root, not /developers.html)
+    document.querySelectorAll('[data-rubin-href]').forEach(function(el) {
+      var u = el.dataset.rubinHref;
+      if (el.tagName === 'A') el.href = u;
+      else el.setAttribute('onclick', "window.open('" + u + "','_blank','noopener');closeStartMenu()");
+    });
+    // open the video window MUCH larger by default — centered and sized to the viewport (still resizable)
+    var rw = document.getElementById('win-rubin');
+    if (rw) {
+      var vw = Math.min(window.innerWidth - 24, 820);
+      var vh = Math.min(window.innerHeight - 110, Math.round(vw * 0.62));
+      rw.style.width = vw + 'px';
+      rw.style.height = vh + 'px';
+      rw.style.left = Math.max(8, Math.round((window.innerWidth - vw) / 2)) + 'px';
+      rw.style.top = '64px';
+    }
     openWindow('rubin');
   } else {
     openWindow('welcome');
