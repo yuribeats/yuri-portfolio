@@ -680,18 +680,6 @@
         z-index: 9998 !important;
       }
 
-      /* Welcome: compact centered overlay, not fullscreen */
-      #win-welcome.visible {
-        position: fixed !important;
-        top: 50% !important;
-        left: 5% !important;
-        width: 90% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        transform: translateY(-50%);
-        z-index: 101 !important;
-      }
-
       /* Bigger touch targets for title bar */
       .win-titlebar { height: 34px; padding: 4px 8px; }
       .win-btn { width: 28px; height: 26px; }
@@ -804,26 +792,6 @@
 
 
   <!-- Windows -->
-
-  <!-- WELCOME -->
-  <div class="win95-window" id="win-welcome" data-id="welcome" style="width:360px;height:auto;min-height:0;top:120px;left:180px;">
-    <div class="win-titlebar" onmousedown="startDrag(event,'win-welcome')">
-      <svg class="win-titlebar-icon" viewBox="0 0 14 14"><rect x="1" y="1" width="10" height="12" fill="#fff" stroke="#fff" stroke-width="0.5"/><line x1="3" y1="5" x2="9" y2="5" stroke="#fff" stroke-width="0.5"/><line x1="3" y1="7" x2="9" y2="7" stroke="#fff" stroke-width="0.5"/></svg>
-      <span class="win-titlebar-text">WELCOME.TXT - NOTEPAD</span>
-      <div class="win-titlebar-btns">
-        <div class="win-btn win-btn-min" onclick="minimizeWindow('welcome')"></div>
-        <div class="win-btn win-btn-max" onclick="maximizeWindow('welcome')"></div>
-        <div class="win-btn win-btn-close" onclick="closeWindow('welcome')"></div>
-      </div>
-    </div>
-    <div class="win-body">
-      <div class="win-body-inner" style="padding:12px;font-family:cursive;font-size:15px;font-weight:900;line-height:1.6;text-transform:none;-webkit-text-stroke:0.3px #000;">
-        HELLO, WELCOME TO YURI'S WEBSITE (THAT'S ME)!<br><br>
-        I LIVE IN MOUNT AIRY PHILADELPHIA WITH MY FAMILY.<br><br>
-        I ENJOY PLAYING THE PIANO, GARDENING AND THE COMPUTER!
-      </div>
-    </div>
-  </div>
 
   <!-- RUBIN (video intro — shown in place of WELCOME at /rubin) -->
   <div class="win95-window" id="win-rubin" data-id="rubin" style="width:480px;height:320px;top:90px;left:160px;">
@@ -1627,7 +1595,7 @@
     }
     openWindow('rubin');
   } else {
-    openWindow('welcome');
+    openWindow('resume');
   }
 })();
 </script>
